@@ -3,14 +3,14 @@ uploadassignments = () => {
     const lfile = dsid("teacherassignmentpdf");
     const grade = dsid("assignmentgrade");
     const duedate = dsid("teacherassignmentduedate");
-    console.log(duedate.value);
+
     let url = "../../teacher/teacherassignments/addassignmentsprocess.php";
     const form = new FormData();
     form.append("lname", lname.value);
     form.append("grade", grade.value);
     form.append("duedate",duedate.value);
     form.append("lfile", lfile.files[0]);
-    console.log(lfile.files[0]);
+    
     fetch(url, { body: form, method: "POST" })
         .then((response) => response.text())
         .then((text) => {

@@ -15,13 +15,11 @@ if (isset($_SESSION["teacher_logged_in_session"])) {
         $assignmentname = $_POST["lname"];
         $dueDate = $_POST["duedate"];
         $receivedfile = $_FILES["lfile"];
-       echo $dueDate;
-       echo $dueDate;
-       echo $dueDate;
+  
         $gradeVali = $validation->gradeVali($grade);
         $nameVali = $validation->stringVali($assignmentname);
      //   $dateVali = $validation->dateVali($dueDate);
-        $foldername = "../../assignmentS";
+        $foldername = "../../assignments";
         if ($gradeVali && $nameVali ) {
 
             require_once "../../fileHandler/filehandler.php";

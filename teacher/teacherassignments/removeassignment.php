@@ -7,7 +7,9 @@ if (isset($_SESSION["teacher_logged_in_session"])) {
         $validation = new ValidateInputs();
         $teacherid = $_POST["tid"];
         $assignmentsrc = $_POST["lsnsrc"];
-         $pathstringvalidation =$validation->pathstringchecklessonnotes($assignmentsrc);
+   
+         $pathstringvalidation =$validation->pathstringcheckforassignments($assignmentsrc);
+     
          $idvalidation =$validation->intIDvalid($teacherid);
          if($idvalidation && $pathstringvalidation){
             require_once "../../teacher/teacherQuery/teacherQuery.php";
