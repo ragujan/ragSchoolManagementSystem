@@ -3,7 +3,7 @@ window.addEventListener("load", () => {
     const gradeNameDiv = document.getElementById("gradeName");
     const studentNameDiv = document.getElementById("studentsList");
     if (studentNameDiv) {
-        let url1 = "../../admin/adminPanel/getstudents.php";
+        let url1 = "../../academic/addstudent/getstudent.php";
 
         fetch(url1)
             .then((response) => response.text())
@@ -33,12 +33,13 @@ loadSnGnT = () => {
     const gradeNameDiv = document.getElementById("gradeName");
     const studentNameDiv = document.getElementById("studentsList");
     if (studentNameDiv) {
-        let url1 = "../../admin/adminPanel/getstudents.php";
+        let url1 = "../../academic/addstudent/getstudent.php";
 
         fetch(url1)
             .then((response) => response.text())
             .then((text) => {
                 studentNameDiv.innerHTML = text;
+                console.log(text);
             });
     }
     if (subjectNameDiv) {
@@ -63,7 +64,7 @@ loadSnGnT = () => {
 
 
 showAddstudentDiv = () => {
-    
+
     const studentAddDiv = document.getElementById("studentAddDiv");
     studentAddDiv.classList.toggle("d-none");
 };
@@ -79,7 +80,7 @@ addstudent = () => {
     const gender = document.getElementById("studentgender");
     const grade = document.getElementById("studentgrade");
     const duedate = document.getElementById("duedate");
-    let url = "../../admin/adminPanel/addstudent.php";
+    let url = "../../academic/addstudent/addstudentprocess.php";
     const form = new FormData();
     form.append("fn", fname.value);
     form.append("ln", lname.value);
@@ -109,9 +110,8 @@ showRemovestudentDiv = () => {
 
 };
 removeThestudent = (id, email) => {
-    console.log(email);
-    console.log(id);
-    let url = "../../admin/adminPanel/removestudent.php";
+
+    let url = "../../academic/addstudent/removestudent.php";
     const form = new FormData();
     form.append("id", id);
     form.append("email", email);
@@ -135,7 +135,7 @@ showUpdatestudentDiv = (id, email) => {
     getSinglestudentDetails(id, email);
 }
 getSinglestudentDetails = (id, email) => {
-    let url = "../../admin/adminPanel/getstudentDetailsasAnArray.php";
+    let url = "../../academic/addstudent/getstudentDetailsasAnArray.php";
     const form = new FormData();
     form.append("id", id);
     form.append("email", email);
@@ -149,14 +149,18 @@ getSinglestudentDetails = (id, email) => {
             const fname = document.getElementById("upstudentfname");
             const lname = document.getElementById("upstudentlname");
             const mail = document.getElementById("upstudentemail");
-            const age = document.getElementById("upstudentage");
-
             const gender = document.getElementById("upstudentgender");
+            const age = document.getElementById("upstudentage");
+            const duedate = document.getElementById("upstudentduedate");
+
             fname.value = array[2];
             lname.value = array[3];
             mail.value = array[1];
             age.value = array[5];
             gender.value = array[4];
+
+            duedate.value = array[7];
+            console.log(array[7]);
             if (text.trim() === "Success") {
                 window.location.reload(false)
             }
@@ -168,8 +172,8 @@ upDatestudent = () => {
     const mail = document.getElementById("upstudentemail");
     const age = document.getElementById("upstudentage");
     const gender = document.getElementById("upstudentgender");
-    
-    let url = "../../admin/adminPanel/updatestudent.php";
+
+    let url = "../../academic/addstudent/updatestudent.php";
     const form = new FormData();
     form.append("fn", fname.value);
     form.append("ln", lname.value);
@@ -207,14 +211,15 @@ showSendMailstudentDiv = () => {
 }
 sendEmailtostudent = (id, email) => {
     console.log(id, email);
-    let url = "../../admin/adminPanel/sendEmailstudent.php";
+    let url = "../../academic/addstudent/sendEmailstudent.php";
     const form = new FormData();
     form.append("id", id);
     form.append("email", email);
     fetch(url, { body: form, method: "POST" })
-        .then((response) => response.text())
-        .then((text) => {
+    .then((response) => response.text())
+    .then((text) => {
+        console.log(text)
 
-            console.log(text);
-        });
+    
+    });
 }

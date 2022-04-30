@@ -1,19 +1,20 @@
 <?php
 session_start();
-if (!isset($_SESSION["AdminSession"])) {
+
+if (!isset($_SESSION["academic_logged_in_session"])) {
     exit();
 } else {
-    if (isset($_POST["e"]) && isset($_POST["g"]) && isset($_POST["duedate"]) && isset($_POST["fn"]) && isset($_POST["ln"]) && isset($_POST["a"])  && isset($_POST["s"])  && isset($_POST["gn"])) {
+    if (isset($_POST["e"]) && isset($_POST["g"]) && isset($_POST["duedate"]) && isset($_POST["fn"]) && isset($_POST["ln"]) && isset($_POST["a"])    && isset($_POST["gn"])) {
         $valiStatus = false;
         $e = $_POST["e"];
         $fn = $_POST["fn"];
         $ln = $_POST["ln"];
         $a = $_POST["a"];
         $due = $_POST["duedate"];
-        $s = $_POST["s"];
+        $g = $_POST["g"];
         $gn = $_POST["gn"];
-        echo "Yeah";
-        die();
+
+      
         require_once "../../inputValidations/ValidateInputs.php";
 
         $validation = new ValidateInputs();
@@ -21,8 +22,10 @@ if (!isset($_SESSION["AdminSession"])) {
         $emailStatus = $validation->mailVali($e);
         $fnameStatus = $validation->stringVali($fn);
         $lnameStatus = $validation->stringVali($ln);
-        $ageVali = $validation->ageVali($a);
+        $ageVali = $validation->studentageVali($a,5,19);
         $genderVali = $validation->genderVali($gn);
+        $duedateVali = $validation->dateVali($due);
+        $gradeVali = $validation->gradeVali($g);
 
         if ($fn == $ln) {
             echo "first name last name cannot be same";
@@ -50,16 +53,26 @@ if (!isset($_SESSION["AdminSession"])) {
 
             $valiStatus = false;
         }
+        if (!$duedateVali) {
 
-        if ($fnameStatus && $lnameStatus && $emailStatus && $ageVali && $genderVali) {
+            echo "due date is not a valid date ";
+            $valiStatus = false;
+        }
+        if (!$gradeVali) {
+            echo "grade value is not a valid date ";
+
+            $valiStatus = false;
+        }
+
+        if ($fnameStatus && $lnameStatus && $emailStatus && $ageVali && $genderVali && $duedateVali && $gradeVali) {
             $valiStatus = true;
         }
 
         if ($valiStatus) {
-
-            require_once "../../admin/adminPanel/AdminQuery.php";
-            $queryObject = new AdminQuery();
-            $queryObject->insertTeacher($fn, $ln, $e, $a, $gn, $s);
+            
+            require_once "../../academic/studentQuery/studentQuery.php";
+            $queryObject = new StudentQuery();
+            $queryObject->insertstudent($fn, $ln, $e, $a, $gn,$due, $g);
             if ($queryObject) {
                 echo "abc";
             } else {

@@ -11,7 +11,7 @@ class ValidateInputs
 
             $state = false;
         } else if (!filter_var($E, FILTER_VALIDATE_EMAIL)) {
-            echo "Problem is here";
+          
             $state = false;
         } else {
             $state = true;
@@ -67,14 +67,14 @@ class ValidateInputs
 
     public function dateVali($d){
         $state =false;
-      
+        
         $breakdate =explode("-",$d);
-    
+       
         if(count($breakdate)==3){
-          if(checkdate($breakdate[0],$breakdate[1],$breakdate[2])){
+          if(checkdate($breakdate[1],$breakdate[2],$breakdate[0])){
                $state =true;
           }else{
-              echo "no no no";
+              echo "couldn't validate date ";
           }
         }else{
             echo "nope";
@@ -98,6 +98,28 @@ class ValidateInputs
             $state = false;
         } else if ($ageGap >= 60) {
             echo "higher than 60";
+            $state = false;
+        } else {
+            $state = true;
+        }
+
+
+        return $state;
+    }
+
+    public function studentageVali($a,$min,$max){
+        $state = false;
+        $ageGapString = $this->getYearDifference($a);
+        $ageGap = (int)$ageGapString;
+
+        if (empty($a)) {
+            echo "empty age";
+            $state = false;
+        } else if ($ageGap <= $min) {
+            echo "lesser than "."".$min;
+            $state = false;
+        } else if ($ageGap >= $max) {
+            echo "higher than 20 "."".$max;
             $state = false;
         } else {
             $state = true;

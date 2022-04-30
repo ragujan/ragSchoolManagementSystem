@@ -42,9 +42,7 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
                                         </div>
 
 
-                                        <div class="col-6">
-                                            <button onclick="showSendMailstudentDiv();" class="py-2 px-lg-2 px-1 fw-bold my-auto w-100">Invite student</button>
-                                        </div>
+                               
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-12  py-3">
@@ -146,28 +144,11 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
                                                     <span>student_age</span>
                                                     <input type="date" placeholder="yyyy-mm-dd" id="upstudentage" class="w-100 px-2 py-2">
                                                 </div>
-
                                                 <div class="col-6">
-                                                    <span>student_subject</span>
-                                                    <select id="upstudentsubject" class="w-100 px-2 py-2">
-                                                        <?php
-                                                        require_once "../../academic/academicQuery/academicQuery.php";
-                                                        $query = new AcademicQuery();
-                                                        $querySubjects = $query->getSubjects();
-                                                        $rowCount = $query->rowCount;
-                                                        for ($i = 0; $i < $rowCount; $i++) {
-                                                            $subjectName = $querySubjects[$i][1];
-                                                            $subjectID = $querySubjects[$i][0];
-                                                        ?>
-                                                            <option class="py-2" value="<?php echo $subjectID ?>">
-                                                                <?php echo $subjectName; ?>
-                                                            </option>
-                                                        <?php
-                                                        }
-                                                        ?>
-                                                    </select>
-
+                                                    <span>student_due_date</span>
+                                                    <input type="date" id="upstudentduedate" class="w-100 px-2 py-2">
                                                 </div>
+                                         
                                                 <div class="col-6">
                                                     <span>student_gender</span>
 
