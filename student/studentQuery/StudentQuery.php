@@ -201,6 +201,28 @@ class StudentQuery extends DBh
         }
         return $state;
     }
+    public function studentCheckEnP($email, $password)
+    {
+        $state = false;
+        $studentCheckQuery = "SELECT * FROM `student` WHERE `student_email`=? ";
+        $studentCheckStmt = $this->connect()->prepare($studentCheckQuery);
+        $studentCheckStmt->execute([$email]);
+        if ($studentCheckStmt->rowCount() == 1) {
+            $studentRow = $studentCheckStmt->fetchAll(PDO::FETCH_ASSOC);
+            $hashedPassword = $studentRow[0]["student_password"];
+            $passwordMatchStatus = password_verify($password, $hashedPassword);
+            if ($passwordMatchStatus) {
+                $state = true;
+                echo "Success";
+            } else {
+                echo "no";
+                $state = false;
+            }
+        } else {
+            $state = true;
+        }
+        return $state;
+    }
     public function removestudent($id, $email)
     {
 
@@ -223,9 +245,7 @@ class StudentQuery extends DBh
         }
         return $state;
     }
-    public function changestudentstatus($id, $email){
-        $emailCheck =  $this->checkstudentEmail($email);
-    }
+
     public function getSinglestudent($id, $email)
     {
         $emailCheck =  $this->checkstudentEmail($email);
@@ -335,5 +355,50 @@ class StudentQuery extends DBh
         }
 
         return $state;
+    }
+
+
+    public function checkVerificationCodebyemailNcode($email, $code)
+    {
+        $state = false;
+        $CheckQuery = "SELECT * FROM verification_code_student
+        INNER JOIN student
+        ON student.student_id = verification_code_student.id
+        WHERE student.student_email = ?
+        AND verification_code_student.verify_code =?";
+        $CheckStmt = $this->connect()->prepare($CheckQuery);
+        $CheckStmt->execute([$email, $code]);
+        $rowFounds = $CheckStmt->rowCount();
+        if ($rowFounds == 1) {
+            $state = true;
+        } else {
+            $state = false;
+        }
+
+        return $state;
+    }
+    public function checkVerificationCodebyemail($email)
+    {
+        $state = false;
+        $CheckQuery = "SELECT * FROM verification_code_student
+        INNER JOIN student
+        ON student.student_id = verification_code_student.id
+        WHERE student.student_email = ? ";
+        $CheckStmt = $this->connect()->prepare($CheckQuery);
+        $CheckStmt->execute([$email]);
+        $rowFounds = $CheckStmt->rowCount();
+        if ($rowFounds == 1) {
+            $state = true;
+        } else {
+            $state = false;
+        }
+
+        return $state;
+    }
+    public function removeverificationcoderow($code)
+    {
+        $query = "DELETE FROM `verification_code_student` WHERE `verify_code`=?";
+        $statement = $this->connect()->prepare($query);
+        $statement->execute([$code]);
     }
 }

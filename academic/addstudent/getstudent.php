@@ -3,9 +3,7 @@ session_start();
 if (!isset($_SESSION["academic_logged_in_session"])) {
     exit();
 } else {
-
 ?>
-
     <div class="row ">
         <div class="col-12 subjectNameHolderDiv">
             <div class="row">
@@ -19,9 +17,9 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
                     $studentID =  $queryStudent[$i][0];
                     $studentFName = $queryStudent[$i][1];
                     $studentLName = $queryStudent[$i][2];
-                    $studentEmail = $queryStudent[$i][5];
+                    $studentEmail = $queryStudent[$i]['student_email'];
                     $studentStatus = $queryStudent[$i][7];
-                    if ($studentStatus == 0) {
+                    if ($studentStatus === 0) {
                 ?>
                         <div class="col-12  subjectDivs my-1 py-2">
                             <div class="row">
