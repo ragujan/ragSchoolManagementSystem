@@ -28,7 +28,7 @@ if (!isset($_SESSION["AdminSession"])) {
                 $enterVerifyCode = $queryObject->addVerificationCode($id,$verifyCode);
                 $userName = $studentDetails[0][1];
                 $lastName = $studentDetails[0][2];
-                echo $userName;    
+                   
                 require "../../SendMail/SendMail.php";
                 $emailSender = new SendMail();
                 $emailSender->setSenderEmail($email);

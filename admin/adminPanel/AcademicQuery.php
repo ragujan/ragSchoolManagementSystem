@@ -286,9 +286,16 @@ class AcademicQuery extends DBh
     public function setacademicPassword($email,$id,$p){
         $hashPassword = password_hash($p, PASSWORD_DEFAULT);
         $academicCheck= $this->academicCheckEnM($email,$id);
-        if(!$academicCheck){
-            
-        }
+         
+            $academicCheckQuery = "UPDATE `academic` SET `academic_password`=? WHERE `academic_id`=? AND `academic_email`=? ";
+            $academicCheckStmt = $this->connect()->prepare($academicCheckQuery);
+            $academicCheckStmt->execute([$hashPassword,$id,$email]);
+            if($academicCheckStmt){
+                echo "Yess changed";
+            }else{
+                echo "nope";
+            }
+        
     }
     public function getacademicDetails($email){
         $state = false;

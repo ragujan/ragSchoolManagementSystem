@@ -285,10 +285,11 @@ class AdminQuery extends DBh
         $hashPassword = password_hash($p, PASSWORD_DEFAULT);
         $teacherCheck= $this->teacherCheckEnM($email,$id);
         if(!$teacherCheck){
-            echo "password set successfully";
+            
             $teacherCheckQuery = "UPDATE `teacher` SET `teacher_password`=? WHERE `teacher_id`=? AND `teacher_email`=? ";
             $teacherCheckStmt = $this->connect()->prepare($teacherCheckQuery);
             $teacherCheckStmt->execute([$hashPassword,$id,$email]);
+            echo "password set successfully";
         }
     }
     public function getTeacherDetails($email){

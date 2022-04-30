@@ -20,7 +20,13 @@ function pathstringcheck($str)
 
 $pathstringcheck = pathstringcheck($checkPath);
 if ($pathstringcheck ) {
-    echo "Yess";
+   
 } else {
+  
+}
+$passwordMatchStatus = password_verify("f0be46b3ad1dc2d22abd0233f3c88f98", "$2y$10$8Gx9THOlJoomPXyIU.fJEuPhGeoeO/sqDdE9IorwcJgOadJxHfBju");
+if($passwordMatchStatus){
+    echo "No problem";
+}else{
     echo "Nope";
 }
