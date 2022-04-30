@@ -3,7 +3,7 @@ session_start();
 if (!isset($_SESSION["teacher_logged_in_session"])) {
     header('Location: /webAssignment/teacher/teacherlogin/teacherlogin.php');
 }
-
+$email= $_SESSION["teacher_logged_in_session"];
 ?>
 
 <!DOCTYPE html>
@@ -27,6 +27,15 @@ if (!isset($_SESSION["teacher_logged_in_session"])) {
                     <div class="row">
                         <div class="col-lg-5 col-md-6 col-12 px-4  AdminWorkOptions">
                             <div class="row gy-3">
+                                <div class="col-12 text-center">
+                                    <?php
+                                    require_once "../../teacher/teacherQuery/teacherQuery.php";
+                                    $query = new TeacherQuery();
+                                    $getTeacherSubject = $query->getteachersubject($email);
+                                    $subjectName = $getTeacherSubject[0][1];
+                                    ?>
+                                    <h5 class="py-2 px-3 fw-bold my-auto w-100">You are currently teaching <b><?php echo $subjectName;?></b></h5>
+                                </div>
                                 <div class="col-6">
                                     <button onclick="goLessonNotes();" class="py-2 px-3 fw-bold my-auto w-100">Add Lesson Notes</button>
                                 </div>

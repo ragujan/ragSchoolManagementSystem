@@ -4,6 +4,14 @@ if (isset($_POST["email"])  && isset($_POST["password"])) {
   $email = $_POST["email"];
   $password = $_POST["password"];
 
+
+  require_once "../../inputValidations/ValidateInputs.php";
+
+  $validation = new ValidateInputs();
+  $emailVali = $validation->mailVali($email);
+  if (!$emailVali) {
+    exit("Not a Valid Email");
+  }
   require_once "../../academic/academicQuery/academicQuery.php";
   $query = new AcademicQuery();
 
@@ -36,7 +44,6 @@ if (isset($_POST["email"])  && isset($_POST["password"])) {
       $emailStatus = $emailSender->sendEmail();
 
       $query->addVerificationCode($academicID, $code);
-      
     } else {
     }
   }

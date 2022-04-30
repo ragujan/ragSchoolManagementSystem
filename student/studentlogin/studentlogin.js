@@ -12,9 +12,9 @@ studentlogIn = () => {
             alert(text);
             console.log(text);
             if(text.trim() =="SuccessSuccess"){
-                window.location ="../../student/studentLogin/studentloginverifycode.php";
+                window.location ="../../student/studentlogin/studentloginverifycode.php";
             }else  if(text.trim() =="Success"){
-                window.location ="../../student/studentLogin/studentloginverifycode.php";
+                window.location ="../../student/studentlogin/studentloginverifycode.php";
             }
      
         });

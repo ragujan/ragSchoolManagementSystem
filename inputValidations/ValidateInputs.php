@@ -3,7 +3,9 @@
 class ValidateInputs
 {
     private $email;
-
+    public function emptyCheck($anything){
+        return(!empty($anything));
+    }
     public function mailVali($E)
     {
         $state = false;
@@ -11,7 +13,7 @@ class ValidateInputs
 
             $state = false;
         } else if (!filter_var($E, FILTER_VALIDATE_EMAIL)) {
-          
+
             $state = false;
         } else {
             $state = true;
@@ -65,22 +67,22 @@ class ValidateInputs
         return $realDateDifference;
     }
 
-    public function dateVali($d){
-        $state =false;
-        
-        $breakdate =explode("-",$d);
-       
-        if(count($breakdate)==3){
-          if(checkdate($breakdate[1],$breakdate[2],$breakdate[0])){
-               $state =true;
-          }else{
-              echo "couldn't validate date ";
-          }
-        }else{
+    public function dateVali($d)
+    {
+        $state = false;
+
+        $breakdate = explode("-", $d);
+
+        if (count($breakdate) == 3) {
+            if (checkdate($breakdate[1], $breakdate[2], $breakdate[0])) {
+                $state = true;
+            } else {
+                echo "couldn't validate date ";
+            }
+        } else {
             echo "nope";
         }
         return $state;
-
     }
     public function ageVali($a)
     {
@@ -107,7 +109,8 @@ class ValidateInputs
         return $state;
     }
 
-    public function studentageVali($a,$min,$max){
+    public function studentageVali($a, $min, $max)
+    {
         $state = false;
         $ageGapString = $this->getYearDifference($a);
         $ageGap = (int)$ageGapString;
@@ -116,10 +119,10 @@ class ValidateInputs
             echo "empty age";
             $state = false;
         } else if ($ageGap <= $min) {
-            echo "lesser than "."".$min;
+            echo "lesser than " . "" . $min;
             $state = false;
         } else if ($ageGap >= $max) {
-            echo "higher than 20 "."".$max;
+            echo "higher than 20 " . "" . $max;
             $state = false;
         } else {
             $state = true;
@@ -239,11 +242,11 @@ class ValidateInputs
     {
         $error = "";
         $state = true;
-        $pwd = $this->pwd;
+        $this->pwd = $pwd;
         if (strlen($pwd) < 8) {
             $error = "Password too short!";
         }
-        if (strlen($pwd) > 20) {
+        if (strlen($pwd) > 50) {
             $error = "Password too long!";
         }
         if (strlen($pwd) < 8) {

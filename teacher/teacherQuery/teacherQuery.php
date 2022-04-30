@@ -334,7 +334,7 @@ class TeacherQuery extends DBh
         $state = false;
         $checkLessonRow = $this->checklessonNotes($teacherid, $lessonsrc);
         if ($checkLessonRow) {
-            $query = "DELETE FROM `teacher_lesson_s` WHERE  `teacher_id`=? AND `lessonSrc`=?";
+            $query = "DELETE FROM `teacher_lesson_notes` WHERE  `teacher_id`=? AND `lessonSrc`=?";
             $removeStatement = $this->connect()->prepare($query);
             $removeStatementResults = $removeStatement->execute([$teacherid, $lessonsrc]);
             if ($removeStatementResults) {
@@ -349,14 +349,16 @@ class TeacherQuery extends DBh
 
 
 
-       
-    public function addassignment($path, $assignmentname, $gradeid, $subjectid, $teacherid,$assignmentduedate)
+
+    public function addassignment($path, $assignmentname, $gradeid, $subjectid, $teacherid, $assignmentduedate)
     {
+        $random = rand();
+        $code = hash('md5', $random);
         $state = false;
         $query = "INSERT INTO `teacher_assignment` 
-                   (`assignmentSrc`,`assignment_name`,`grade_id`,`subject_id`,`teacher_id`,`assignment_due_date`) VALUES (?,?,?,?,?,?)  ";
+                   (`assignmentSrc`,`assignment_name`,`grade_id`,`subject_id`,`teacher_id`,`assignment_due_date`,`assignment_unique_code`) VALUES (?,?,?,?,?,?,?)  ";
         $insertStatement = $this->connect()->prepare($query);
-        $insertStatementResults = $insertStatement->execute([$path, $assignmentname, $gradeid, $subjectid, $teacherid,$assignmentduedate]);
+        $insertStatementResults = $insertStatement->execute([$path, $assignmentname, $gradeid, $subjectid, $teacherid, $assignmentduedate, $code]);
         if ($insertStatementResults) {
             $state  = true;
         }
@@ -415,5 +417,26 @@ class TeacherQuery extends DBh
 
 
         return $state;
+    }
+
+    public function getteachersubject($email)
+    {
+        $query = "SELECT subject.subject_id,subject.subject_name FROM `teacher`
+        INNER JOIN
+        subject
+        ON subject.subject_id = teacher.subject_id
+        WHERE `teacher_email`= ? ";
+        $statement = $this->connect()->prepare($query);
+        $statement->execute([$email]);
+        $rowFounds = $statement->rowCount();
+        if ($rowFounds >= 1) {
+            $fetchRows = $statement->fetchAll();
+            $this->rowCount = $rowFounds;
+        } else {
+            $fetchRows = array("Nothing");
+            $this->rowCount = 0;
+        }
+
+        return $fetchRows;
     }
 }

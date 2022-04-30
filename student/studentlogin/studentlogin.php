@@ -5,6 +5,9 @@ if (isset($_SESSION["studentsessionVariableOnVerifyCode"])) {
     unset($_SESSION["studentsessionVariableOnVerifyCode"]);
 }
 
+if (isset($_SESSION["student_logged_in_session"])) {
+    header('Location: /webAssignment/student/studentpanel/studentpanel.php');
+}
 
 
 ?>

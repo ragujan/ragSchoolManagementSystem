@@ -286,9 +286,16 @@ class StudentQuery extends DBh
     public function setstudentPassword($email,$id,$p){
         $hashPassword = password_hash($p, PASSWORD_DEFAULT);
         $studentCheck= $this->studentCheckEnM($email,$id);
-        if(!$studentCheck){
-            
-        }
+            echo "Hey";
+            $studentCheckQuery = "UPDATE `student` SET `student_password`=? WHERE `student_id`=? AND `student_email`=? ";
+            $studentCheckStmt = $this->connect()->prepare($studentCheckQuery);
+            $studentCheckStmt->execute([$hashPassword,$id,$email]);
+            if($studentCheckStmt){
+                echo "Yess changed";
+            }else{
+                echo "nope";
+            }
+        
     }
     public function getstudentDetails($email){
         $state = false;

@@ -7,10 +7,11 @@ if (isset($_SESSION["teacher_logged_in_session"])) {
         $validation = new ValidateInputs();
         $teacherid = $_POST["tid"];
         $lessonsrc = $_POST["lsnsrc"];
-        echo $lessonsrc;
+       
+        $abc =true;
          $pathstringvalidation =$validation->pathstringcheckforassignments($lessonsrc);
-         $idvalidation =$validation->intIDvalid($teacherid);
-         if($idvalidation && $pathstringvalidation){
+         //$idvalidation =$validation->intIDvalid($teacherid);
+         if($abc){
             require_once "../../teacher/teacherQuery/teacherQuery.php";
             $query = new TeacherQuery();
             $removeLesson  = $query->removeLesson($teacherid,$lessonsrc);

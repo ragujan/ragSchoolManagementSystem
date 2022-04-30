@@ -3,7 +3,13 @@ session_start();
 if (isset($_POST["email"])  && isset($_POST["password"])) {
   $email = $_POST["email"];
   $password = $_POST["password"];
-
+  require_once "../../inputValidations/ValidateInputs.php";
+  $validation = new ValidateInputs();
+  $emailVali = $validation->mailVali($email);
+  $passwordValid= $validation->passwordVali($password);
+  if (!$emailVali) {
+    exit("Not a Valid Email");
+  }
   require_once "../../teacher/teacherQuery/teacherQuery.php";
   $query = new TeacherQuery();
 

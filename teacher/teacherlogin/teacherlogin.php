@@ -4,7 +4,9 @@ session_start();
     if(isset($_SESSION["teachersessionVariableOnVerifyCode"])){
         unset($_SESSION["teachersessionVariableOnVerifyCode"]);
     }
-    
+    if (isset($_SESSION["teacher_logged_in_session"])) {
+        header('Location: /webAssignment/teacher/teacherpanel/teacherpanel.php');
+    }
 
 
 ?>

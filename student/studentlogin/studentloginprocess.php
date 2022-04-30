@@ -3,7 +3,18 @@ session_start();
 if (isset($_POST["email"])  && isset($_POST["password"])) {
   $email = $_POST["email"];
   $password = $_POST["password"];
-  echo "YEss";
+  require_once "../../inputValidations/ValidateInputs.php";
+  $validation = new ValidateInputs();
+  $emailVali = $validation->mailVali($email);
+  $passwordValid = $validation->emptyCheck($password);
+  if (!$emailVali) {
+    exit("Not a Valid Email");
+  }
+  if(!$passwordValid){
+    exit("password is not valid");
+  }
+
+
   require_once "../../student/studentQuery/studentQuery.php";
   $query = new StudentQuery();
 
@@ -36,7 +47,6 @@ if (isset($_POST["email"])  && isset($_POST["password"])) {
       $emailStatus = $emailSender->sendEmail();
 
       $query->addVerificationCode($studentID, $code);
-      
     } else {
     }
   }

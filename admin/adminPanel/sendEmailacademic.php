@@ -33,7 +33,7 @@ if (!isset($_SESSION["AdminSession"])) {
             
                 $emailSender->setBody("<h2 style='font-family: Impact, sans-serif;
                 color: #CE5937;'>
-                  Your User_name and Verification Code 
+                  Academic User_name and Verification Code 
                   </h2>
                   <span>Verification Code</span>
                   <input style='width:50%;outline:none;border:none;' value='$verifyCode' readonly>
