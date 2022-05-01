@@ -32,29 +32,12 @@ if (!isset($_SESSION["teacher_logged_in_session"])) {
                     </div>
                 </div>
 
-                <div class="col-12 " id="teacherUpdateDiv">
+                <div class="col-12 " id="teachershowassignmentsdiv">
                     <div class="row">
-                        <div class="col-12 text-center ">
-                            <span class="fw-bold text-danger" id="upAddteachererrormessage"></span>
-                        </div>
-                        <div class="col-6">
-                            <span>lesson_name</span>
-                            <input type="text" id="teacherlessonname" class="w-100 px-2 py-2">
-                        </div>
-
-                        <div class="col-6">
-                            <span>lesson_name</span>
-                            <div>
-                                <label class="w-100 px-2 py-2 bg-white text-dark" for="teacherlessonpdf">Upload lesson notes</label>
-                            </div>
-                            <input class="d-none" type="file" id="teacherlessonpdf" class="w-100 px-2 py-2">
-                        </div>
-
-
                         <div class="col-6">
                             <span>select_grade</span>
 
-                            <select id="lessongrade" class="w-100 px-2 py-2">
+                            <select onchange="showstudents();" id="studentgrade" class="w-100 px-2 py-2">
                                 <?php
                                 require_once "../../admin/adminPanel/AdminQuery.php";
                                 $query = new AdminQuery();
@@ -74,9 +57,14 @@ if (!isset($_SESSION["teacher_logged_in_session"])) {
 
                             </select>
                         </div>
+                        <div class="col-12 py-2">
+                            <span>Select_student</span>
+                             <div class="row">
+                                 <div id="showstudentassignments" class="col-12">
 
-                        <div class="col-12 text-center py-4">
-                            <button onclick="uploadlessonnotes();" class="ragFancyButton px-2 py-2 w-50">Add Lesson</button>
+                                 </div>
+                             </div>
+                
                         </div>
                     </div>
                 </div>
