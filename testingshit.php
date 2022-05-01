@@ -30,3 +30,30 @@ if($passwordMatchStatus){
 }else{
     echo "Nope";
 }
+echo "<br/>";
+
+// $assignment_due_date =date_create("2022-03-01");
+// $today = date_create("2022-05-01");
+// $datedifference = date_diff($today,$assignment_due_date);
+// $d= $datedifference->format('%R%d');
+// $numbers = preg_replace('/[^0-9]/', '', $d);
+// echo $numbers;
+// echo "<br/>";
+
+ function getDateDifference2($date)
+{
+    $newDate = date("Y-m-d", strtotime($date));
+    $tdate = time();
+
+    $formattedDate = strtotime(str_replace("/", "-", $newDate));
+
+    $realDateDifference = ceil(($formattedDate -  $tdate) / 86400);
+    // echo $realDateDifference;
+    //  $dateDifference = date('Y', $tdate) - date('Y', $formattedDate);
+
+    return $realDateDifference;
+}
+
+echo getDateDifference2("2022-03-01");
+// $days = explode("+",$d);
+// echo $days[1];

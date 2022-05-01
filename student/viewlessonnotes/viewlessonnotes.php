@@ -31,13 +31,12 @@ if (!isset($_SESSION["student_logged_in_session"])) {
                         </div>
                     </div>
                 </div>
-                <div class="col-12" id="errordiv">
-                    
+                <div class="col-12">
+                    <h4>View Lecture Notes</h4>
                 </div>
-                <div class="col-12 " id="studentuploadassignmentDiv">
-               
-                </div>
-                <div class="col-10 offset-1 showassignments " id="showassignments">
+   
+                
+                <div class="col-10 offset-1 showassignments " id="showlessonnotes">
 
                 </div>
             </div>
@@ -52,7 +51,7 @@ if (!isset($_SESSION["student_logged_in_session"])) {
 
 
 
-    <script src="uploadassignment.js"></script>
+    <script src="viewlessonnotes.js"></script>
 </body>
 
 </html>

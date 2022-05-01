@@ -3,8 +3,9 @@
 class ValidateInputs
 {
     private $email;
-    public function emptyCheck($anything){
-        return(!empty($anything));
+    public function emptyCheck($anything)
+    {
+        return (!empty($anything));
     }
     public function mailVali($E)
     {
@@ -48,6 +49,20 @@ class ValidateInputs
         $formattedDate = strtotime(str_replace("/", "-", $newDate));
 
         $realDateDifference = ceil(($tdate - $formattedDate) / 86400);
+        // echo $realDateDifference;
+        //  $dateDifference = date('Y', $tdate) - date('Y', $formattedDate);
+
+        return $realDateDifference;
+    }
+
+    public function getDateDifference2($date)
+    {
+        $newDate = date("Y-m-d", strtotime($date));
+        $tdate = time();
+
+        $formattedDate = strtotime(str_replace("/", "-", $newDate));
+
+        $realDateDifference = ceil(($formattedDate -  $tdate) / 86400);
         // echo $realDateDifference;
         //  $dateDifference = date('Y', $tdate) - date('Y', $formattedDate);
 

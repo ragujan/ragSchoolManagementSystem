@@ -5,3 +5,7 @@ goLessonNotes = ()=>{
 goAssignments = ()=>{
     window.location ="../../teacher/teacherassignments/addassignments.php";
 }
+
+addassignmentmarks =()=>{
+    window.location ="../../teacher/addassignmentmarks/addassignmentmarks.php";
+}
