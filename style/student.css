@@ -27,10 +27,16 @@ body {
     color: rgb(179, 179, 179);
     border-radius: 5px;
 }
-
+.subjectDivs span{
+    font-size: 15px;
+}
+.subjectdetailspan{
+    border-radius: 10px;
+    border: black 1px solid;
+}
 .gradeNameHolderDiv,
 .subjectNameHolderDiv {
-    height: 250px;
+    height: 450px;
     overflow-y: scroll;
 }
 
@@ -122,4 +128,9 @@ body {
     background-color: rgb(117, 0, 0);
     color: rgb(255, 255, 255);
     width: 100%;
+}
+
+.writewrongicons{
+    width: 30px;
+    max-width: 100%;
 }

@@ -28,16 +28,16 @@ if (!isset($_SESSION["student_logged_in_session"])) {
                         <div class="col-lg-5 col-md-6 col-12 px-4  AdminWorkOptions">
                             <div class="row gy-3">
                                 <div class="col-6">
-                                    <button onclick=";" class="py-2 px-3 fw-bold my-auto w-100 ragFancyButton">View Lesson Notes</button>
+                                    <button onclick="viewlessonnotes();" class="py-2 px-3 fw-bold my-auto w-100 ragFancyButton">View Lesson Notes</button>
                                 </div>
                                 <div class="col-6">
-                                    <button onclick=";" class="py-2 px-3 fw-bold my-auto w-100 ragFancyButton">View Assignments</button>
+                                    <button onclick="viewassignments();" class="py-2 px-3 fw-bold my-auto w-100 ragFancyButton">View Assignments</button>
                                 </div>
                                 <div class="col-6">
                                     <button onclick="uploadassignment();" class="py-2 px-3 fw-bold my-auto w-100 ragFancyButton">Upload Assignments </button>
                                 </div>
                                 <div class="col-6">
-                                    <button class="py-2 px-3 fw-bold my-auto w-100 ragFancyButton">Add assignment marks</button>
+                                    <button class="py-2 px-3 fw-bold my-auto w-100 ragFancyButton">View assignment marks</button>
                                 </div>
                                 <div class="col-6">
                                     <button onclick=";" class="py-2 px-3 fw-bold my-auto w-100 ragFancyButton">Update profile</button>

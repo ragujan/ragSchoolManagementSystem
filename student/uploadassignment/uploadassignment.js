@@ -17,7 +17,7 @@ if (studentassignmentsubjectselector) {
     console.log('noe');
 }
 uploadassignments = () => {
-
+    const errordiv =document.getElementById("errordiv") ;
     const lfile = dsid("studentassignmentpdf");
     const subject = dsid("studentassignmentsubject");
     const assignmentid = dsid("studentassignmentassignment");
@@ -33,9 +33,16 @@ uploadassignments = () => {
         .then((response) => response.text())
         .then((text) => {
             console.log(text);
-            document.getElementById("showassignments").innerHTML=text;
-      
-
+            if(text.trim()=="Success"){
+                errordiv.style.color ="white";
+                errordiv.classList.remove("py-1");
+                errordiv.innerHTML="";
+            }else{
+               
+                errordiv.style.color ="red";
+                errordiv.classList.add("py-1");
+                errordiv.innerHTML=text;              
+            }
         });
 }
 dsid = (id) => {
