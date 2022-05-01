@@ -35,7 +35,7 @@ if (!isset($_SESSION["student_logged_in_session"])) {
                 <div class="col-12 " id="studentuploadassignmentDiv">
                
                 </div>
-                <div class="col-10 offset-1 showassignments d-none" id="showassignments">
+                <div class="col-10 offset-1 showassignments " id="showassignments">
 
                 </div>
             </div>

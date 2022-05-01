@@ -70,6 +70,41 @@ class StudentQuery extends DBh
 
         return $fetchRows;
     }
+
+    public function getstudentassignment($gradeid)
+    {
+        $query = "SELECT * FROM teacher_assignment
+        WHERE teacher_assignment.grade_id = ?";
+        $statement = $this->connect()->prepare($query);
+        $statement->execute([$gradeid]);
+        $rowFounds = $statement->rowCount();
+        if ($rowFounds >= 1) {
+            $fetchRows = $statement->fetchAll();
+            $this->rowCount = $rowFounds;
+        } else {
+            $fetchRows = array("Nothing");
+            $this->rowCount = 0;
+        }
+
+        return $fetchRows;
+    }
+    public function getstudentassignmentwithsubjectid($gradeid, $subjectid)
+    {
+        $query = "SELECT * FROM teacher_assignment
+        WHERE teacher_assignment.grade_id = ? AND teacher_assignment.subject_id=?";
+        $statement = $this->connect()->prepare($query);
+        $statement->execute([$gradeid, $subjectid]);
+        $rowFounds = $statement->rowCount();
+        if ($rowFounds >= 1) {
+            $fetchRows = $statement->fetchAll();
+            $this->rowCount = $rowFounds;
+        } else {
+            $fetchRows = array("Nothing");
+            $this->rowCount = 0;
+        }
+
+        return $fetchRows;
+    }
     public function getstudentgrade($email)
     {
 
@@ -129,6 +164,68 @@ class StudentQuery extends DBh
             }
         }
         return $state;
+    }
+
+    public function insertassignment($today, $subjectID, $studentgradeid, $assignmentcode, $studentid, $folderpath)
+    {
+        $state = false;
+        $random = rand();
+        $studentresults = 1;
+        $randomcode = hash('md5', $random);
+        $getassignmentdetailsbycode =  $this->getassignmentdetailsbycode($assignmentcode);
+        if ($getassignmentdetailsbycode[0] !== "Nothing") {
+            $getassignmentid = $getassignmentdetailsbycode;
+            $assignmentid = $getassignmentid[0][0];
+            $searchstudentassignment = $this->getstudentassignmentdetails($assignmentid, $studentid, $subjectID, $studentgradeid);
+            if (!$searchstudentassignment) {
+                $insertquery = "INSERT INTO `student_assignment` (`uploaded_date`,`subject_id`,`grade_id`,`assignment_id`,`uniquely_generated_code`,`student_results`,`student_id`,`assignmentsrc`)
+                VALUES (?,?,?,?,?,?,?,?)";
+                $insertStatement = $this->connect()->prepare($insertquery);
+                $insertStatementresult = $insertStatement->execute([$today, $subjectID, $studentgradeid, $assignmentid, $randomcode, $studentresults, $studentid, $folderpath]);
+                if ($insertStatementresult) {
+                    $state = true;
+                }
+            } else {
+                $this->unsetthefolderpath($folderpath);
+                echo "already entered so sorry";
+            }
+        }
+        return $state;
+    }
+    public function unsetthefolderpath($folderpath){
+        unlink($folderpath);
+    }
+    public function getstudentassignmentdetails($assignmentid, $studentid, $subjectid, $gradeid)
+    {
+        $state = false;
+        
+        $searchquery = "SELECT * FROM `student_assignment` WHERE `assignment_id`=? AND
+                       `subject_id`=? AND `grade_id`=? AND `student_id`=?";
+        $searchquerystatement = $this->connect()->prepare($searchquery);
+        $searchquerystatement->execute([$assignmentid, $subjectid, $gradeid, $studentid]);
+        $rowcount = $searchquerystatement->rowCount();
+        if ($rowcount == 1) {
+           
+            $state = true;
+        }
+        return $state;
+    }
+    public function getassignmentdetailsbycode($code)
+    {
+        $query = "SELECT `assignment_id` FROM teacher_assignment
+        WHERE teacher_assignment.assignment_unique_code = ?";
+        $statement = $this->connect()->prepare($query);
+        $statement->execute([$code]);
+        $rowFounds = $statement->rowCount();
+        if ($rowFounds >= 1) {
+            $fetchRows = $statement->fetchAll();
+            $this->rowCount = $rowFounds;
+        } else {
+            $fetchRows = array(0 => "Nothing");
+            $this->rowCount = 0;
+        }
+
+        return $fetchRows;
     }
     public function insertGrade($grade)
     {
