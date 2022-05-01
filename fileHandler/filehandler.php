@@ -1,4 +1,6 @@
 <?php
+
+
 class FileHandler
 {   private $status =false;
     public $thecommonfile;
@@ -41,45 +43,10 @@ class FileHandler
     {
         return $this->unique_name_generated;
     }
+
+    public function validateFile($file,$type,$size){
+
+    }
 }
 
 
-// $charLength = 25;
-// if (
-//     isset($_POST["SampleName"]) 
-//     && isset($_POST["SamplePrice"]) 
-//     && isset($_POST["SampleDescription"])
-
-// ) {
-
-
-//     if (isset($_FILES["SampleFile"])) {
-
-//         if (
-//             $_FILES["SampleFile"]["type"] == "application/x-zip-compressed" && $_FILES["SampleAudio"]["type"] == "audio/mpeg" && $_FILES["SampleImage"]["type"] == "image/jpeg"
-//         ) {
-//             require "../DB/DB.php";
-
-//             $availabletypes;
-
-//             $sname = $_POST["SampleName"];
-//             $sprice = $_POST["SamplePrice"];
-//             $subSampletype = $_POST["SampleSubMelody"];
-//             $sampledescription = $_POST["SampleDescription"];
-//             echo $subSampletype;
-//             $date = date("Y-m-d h:i:s");
-
-
-
-//             if (isset($_FILES["SampleFile"])) {
-//                 $fileHandlerforzip = new FileHandler();
-//                 $fileHandlerforzip->filedetails($_FILES["SampleFile"], "samples", "50000000", "zip");
-//                 $zippathname = $fileHandlerforzip->getFilename();
-//             }
-//         } else {
-
-//             echo "Not the exact file type ";
-//         }
-//     }
-// } else {
-// }
