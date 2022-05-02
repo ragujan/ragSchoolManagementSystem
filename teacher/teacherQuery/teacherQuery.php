@@ -24,6 +24,19 @@ class TeacherQuery extends DBh
 
         return $fetchRows;
     }
+    public function getstudentsbygrade($gradeid){
+        $query = "SELECT * FROM student WHERE grade_id =?";
+        $statement = $this->connect()->prepare($query);
+        $statement->execute([$gradeid]);
+        $rowFounds = $statement->rowCount();
+        if($rowFounds>=1){
+            $fetchRows = $statement->fetchAll();
+            $this->rowCount = $rowFounds;
+        }else{
+            $fetchRows = array("Nothing");
+            $this->rowCount = 0;
+        }
+    }
 
 
     public function insertTeacher($fname, $lname, $email, $age, $gender, $grade, $subject)

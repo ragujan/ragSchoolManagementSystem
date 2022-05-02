@@ -61,7 +61,7 @@ if (!isset($_SESSION["teacher_logged_in_session"])) {
                             <span>Select_student</span>
                              <div class="row">
                                  <div id="showstudentassignments" class="col-12">
-
+                                    
                                  </div>
                              </div>
                 
