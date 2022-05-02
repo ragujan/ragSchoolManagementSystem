@@ -1,10 +1,11 @@
 <?php
-class GetResults{
+class CalculateResults{
     private $result;
     function giveresults($marks,$sign){
-       
+        
         if($sign == "-"){
             $marks = $marks*(90/100);
+            
         }
         if($marks <40){
             $this->result = "F";

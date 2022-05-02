@@ -252,7 +252,17 @@ class ValidateInputs
         }
         return $state;
     }
-
+    public function marksVali($marks){
+        $state = false;
+        if (!ctype_digit($marks)) {
+                $state = false;
+        }else if($marks>=100 && $marks<0){
+               $state =false;
+        }else{
+             $state =true;
+        }
+        return $state;
+    }
     public function passwordVali($pwd)
     {
         $error = "";
