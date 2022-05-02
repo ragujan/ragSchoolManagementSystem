@@ -37,6 +37,7 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
             <?php
             for ($i = 0; $i < $rowCount; $i++) {
                 $assignmentname =  $submittedstudentassignments[$i]['assignment_name'];
+                $assignmentID =  $submittedstudentassignments[$i]['student_assignment_id'];
                 $assignmentsubjectname = $submittedstudentassignments[$i]['subject_name'];
                 $assignmentresultname = $submittedstudentassignments[$i]['result_name'];
             ?>
@@ -52,7 +53,7 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
                             <span style="font-size: 15px;" class="  py-lg-3 py-1  w-100 text-white"><?php echo $assignmentresultname  ?></span>
                         </div>
                         <div class=" col-lg-3 col-md-12 col-12 py-1 py-md-1 text-center ">
-                            <button class=" ragFancyButton w-100 text-white">Approve results to student</button>
+                            <button onclick="approveresult(<?php echo $assignmentID; ?>);" class=" ragFancyButton w-100 text-white">Approve results to student</button>
                         </div>
 
 

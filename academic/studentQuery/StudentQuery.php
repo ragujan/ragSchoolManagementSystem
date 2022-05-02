@@ -416,4 +416,36 @@ class StudentQuery extends DBh
           return $fetchRows;
     }
 
+    public function approveresult($student_assignment_id){
+        $state =false;
+        if(!$this->checkapproveresult($student_assignment_id)){
+            $query ="INSERT INTO approved_results (`student_assignment_id`)
+            VALUES (?)";
+            $stmt = $this->connect()->prepare($query);
+            $stmtState =$stmt ->execute([$student_assignment_id]);
+            if($stmtState){
+                $state=true;
+            }
+        }else{
+            echo "Already approved this result";
+        }
+        return $state;
+
+    }
+    public function checkapproveresult($student_assignment_id){
+        $state = false;
+        
+        $CheckQuery = "SELECT * FROM approved_results WHERE approved_results.student_assignment_id=?";
+        $CheckStmt = $this->connect()->prepare($CheckQuery);
+        $CheckStmt->execute([$student_assignment_id]);
+        $rowFounds = $CheckStmt ->rowCount();
+        if ($rowFounds == 1) {
+               $state =true;
+        } else {
+             $state =false;
+        }
+
+        return $state;
+    }
+
 }
