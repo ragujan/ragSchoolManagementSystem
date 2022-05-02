@@ -92,7 +92,12 @@ body {
     background-color: rgb(0, 59, 117);
     color: rgb(179, 179, 179);
 }
-
+.ragFancyButtondanger{
+    border: rgb(0, 63, 236) solid 1px;
+    border-radius: 4px;
+    background-color: rgb(145, 29, 0);
+    color: rgb(179, 179, 179);
+}
 .ragFancyButton:hover {
     border: rgb(0, 63, 236) solid 1px;
     border-radius: 4px;
@@ -122,4 +127,7 @@ body {
     background-color: rgb(117, 0, 0);
     color: rgb(255, 255, 255);
     width: 100%;
+}.writewrongicons{
+    width: 30px;
+    max-width: 100%;
 }

@@ -10,3 +10,6 @@ viewlessonnotes =()=>{
 viewassignments =()=>{
     window.location ="../../student/viewassignments/viewassignments.php";
 }
+logout =()=>{
+    window.location ="../../student/logout/logout.php";
+}

@@ -18,7 +18,7 @@ if (!isset($_SESSION["student_logged_in_session"])) {
                 $studentid = $getstudentdetails[0][0];
                 $studentgrade =  $getstudentdetails[0][8];
 
-                $queryassignment = $query->getassignments($studentgrade);
+                $queryassignment = $query->getassignments($studentgrade,$studentid);
                 $rowCount = $query->rowCount;
                 $assignmentIDArrays_from_student = [];
                 for ($i = 0; $i < $rowCount; $i++) {
