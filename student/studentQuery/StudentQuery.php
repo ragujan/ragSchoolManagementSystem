@@ -325,15 +325,15 @@ class StudentQuery extends DBh
 
         return $fetchRows;
     }
-    public function getassignments($gradeid){
+    public function getassignments($gradeid,$studentid){
         $query ="SELECT * FROM  student_assignment
         INNER JOIN 
         teacher_assignment
         ON 
         teacher_assignment.assignment_id = student_assignment.assignment_id
-        WHERE student_assignment.grade_id =  ?";
+        WHERE student_assignment.grade_id =  ? AND student_assignment.student_id =?";
         $assignmentstmt =  $this->connect()->prepare($query);
-        $assignmentstmt->execute([$gradeid]);
+        $assignmentstmt->execute([$gradeid,$studentid]);
         $rowCount = $assignmentstmt->rowCount();
         if($rowCount>=1){
             $fetchRows = $assignmentstmt->fetchAll();
