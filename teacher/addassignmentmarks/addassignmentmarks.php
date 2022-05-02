@@ -68,7 +68,7 @@ if (!isset($_SESSION["teacher_logged_in_session"])) {
                         </div>
                     </div>
                 </div>
-                <div class="col-10 offset-1 showlessonnotes d-none" id="showlessonnotes">
+                <div class="col-10 offset-1 showlessonnotes " id="showsomething">
 
                 </div>
             </div>
