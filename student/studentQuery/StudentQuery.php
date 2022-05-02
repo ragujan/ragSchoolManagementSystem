@@ -546,6 +546,22 @@ class StudentQuery extends DBh
 
         return $fetchRows;
     }
+    public function getstudentDetailsbyid($id){
+        $state = false;
+        $studentCheckQuery = "SELECT * FROM `student` WHERE `student_id`=?";
+        $studentCheckStmt = $this->connect()->prepare($studentCheckQuery);
+        $studentCheckStmt->execute([$id]);
+        $rowFounds = $studentCheckStmt->rowCount();
+        if ($rowFounds >= 1) {
+            $fetchRows = $studentCheckStmt->fetchAll();
+            $this->rowCount = $rowFounds;
+        } else {
+            $fetchRows = array("Nothing");
+            $this->rowCount = 0;
+        }
+
+        return $fetchRows;
+    }
     public function addVerificationCode($id, $code)
     {
         $userCheck = $this->checkVerificationCode($id);

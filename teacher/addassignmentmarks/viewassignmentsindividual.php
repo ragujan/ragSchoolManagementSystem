@@ -6,6 +6,7 @@ if (!isset($_SESSION["teacher_logged_in_session"])) {
 if (!isset($_GET["X"])) {
     header('Location: /webAssignment/teacher/addassignmentmarks/addassignmentmarks.php');
 }
+require_once "../../properdatedifference/properdatedifference.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -33,11 +34,99 @@ if (!isset($_GET["X"])) {
                         </div>
                     </div>
                 </div>
-
-
-      
             </div>
         </div>
+        <div>
+            <?php
+            require_once "../../teacher/teacherQuery/teacherQuery.php";
+            $teachermail = $_SESSION["teacher_logged_in_session"];
+            $query = new TeacherQuery();
+            $getteacherdetails = $query->getTeacherDetails($teachermail);
+            $teachersubjectid = $getteacherdetails[0][5];
+            $teacherid = $getteacherdetails[0][0];
+
+            $studentid = $_GET["X"];
+            require_once "../../student/studentQuery/studentQuery.php";
+            $studentdetails = new StudentQuery();
+            $getstudentgeneraldetails = $studentdetails->getstudentDetailsbyid($studentid);
+            $studentfname = $getstudentgeneraldetails[0]['student_fname'];
+            $studentid = $getstudentgeneraldetails[0]['student_id'];
+
+            require_once "../../inputValidations/ValidateInputs.php";
+            $validation = new ValidateInputs();
+
+            ?>
+            <div class="col-12 py-2">
+                <div class="row">
+                    <div class="col-lg-4 col-12 text-start px-5">
+                        <span>Student Name : <?php echo $studentfname; ?></span>
+                    </div>
+                </div>
+            </div>
+            <?php
+            $getindividualstudentassignments = $query->getstudentsubmissionsbystudentid($studentid, $teachersubjectid);
+            $rowcount = count($getindividualstudentassignments);
+            if ($rowcount >= 1 && $getindividualstudentassignments[0] !== "Nothing") {
+                for ($i = 0; $i < $rowcount; $i++) {
+                    $assignmentsrc = $getindividualstudentassignments[$i]['assignmentsrc'];
+                    $assignmentname = $getindividualstudentassignments[$i]['assignment_name'];
+                    $assignmentduedate = $getindividualstudentassignments[$i]['assignment_due_date'];
+                    $assignmentuploadeddate = $getindividualstudentassignments[$i]['uploaded_date'];
+                    $studentname = $getindividualstudentassignments[$i]['student_fname'];
+                    $studentassignmentid = $getindividualstudentassignments[$i]['student_assignment_id'];
+                    $datediffcal = new ProperDateDifference();
+                    $getdatedifference = $datediffcal->datediff($assignmentuploadeddate, $assignmentduedate);
+
+                    $ddfsign = $datediffcal->returndsign();
+
+                    if ($ddfsign == '+') {
+                        echo "Ok";
+                    }
+            ?>
+                    <div class="col-12  subjectDivs my-1 py-3">
+                        <div class="row  gy-5 ">
+
+                            <div class=" col-lg-3 col-md-12 col-12 py-2 py-md-1 text-center ">
+                                <span style="font-size: 15px;" class="  py-3  w-100 text-white"><?php echo $assignmentname  ?></span>
+                            </div>
+                            <div class=" col-lg-2 col-md-12 col-12 py-2 py-md-1   text-center ">
+                                <span style="font-size: 15px;" class="  py-3  w-100 text-white"><?php echo $assignmentuploadeddate  ?></span>
+
+                            </div>
+                            <div class=" col-lg-3 col-md-12 col-12 py-2 py-md-1   text-center ">
+                                <div class="row">
+                                    <div class=" col-12  ">
+                                        <a href="<?php echo $assignmentsrc; ?>">View </a>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class=" col-lg-4 col-md-12 col-12 py-2 py-md-1   text-center ">
+                                <div class="row">
+                                    <div class=" col-lg-6 col-12  ">
+                                        <input id="assignmentmarks" type="number">
+
+                                    </div>
+                                    <div class=" col-lg-6 col-12  ">
+                                        <button disabled id="marksbutton"  onclick="entermarks('<?php echo $studentassignmentid; ?>','<?php echo $studentid; ?>')">Enter Marks</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+            <?php
+                }
+            } else {
+                echo $getindividualstudentassignments[0];
+            }
+            ?>
+        </div>
+    </div>
+
+
     </div>
 
 
@@ -48,7 +137,7 @@ if (!isset($_GET["X"])) {
 
 
 
-    <script src="addassignmentmarks.js"></script>
+    <script src=" addassignmentmarks.js"></script>
 </body>
 
 </html>
