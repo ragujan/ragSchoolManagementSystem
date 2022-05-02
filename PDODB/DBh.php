@@ -1,6 +1,6 @@
 <?php
 
-class DBh
+ class  DBh
 {
     private $servername;
     private $dbname;
