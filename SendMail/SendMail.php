@@ -8,7 +8,7 @@ use PHPMailer\PHPMailer\SMTP;
 class SendMail
 {
     private $emailSentStatus = false;
-    private $email = "stiflerwedontgiveup@gmail.com";
+    private $email = "";
     private $sendersEmail;
     private $body;
     private $receipient;
@@ -37,13 +37,13 @@ class SendMail
             $mail->isSMTP();
             $mail->Host       = 'smtp.gmail.com';
             $mail->SMTPAuth   = true;
-            $mail->Username   = "needtoknoweverything631@gmail.com";
-            $mail->Password   = 'blahblahblackshp';
+            $mail->Username   = "";
+            $mail->Password   = '';
             $mail->SMTPSecure = 'ssl';
             $mail->Port       = 465;
-            $mail->setFrom("needtoknoweverything631@gmail.com", '');
+            $mail->setFrom("", '');
             $mail->addAddress($this->sendersEmail);
-            $mail->addReplyTo("needtoknoweverything631@gmail.com", '');
+            $mail->addReplyTo("", '');
             $mail->addCC('cc@example.com');
             $mail->addBCC('bcc@example.com');
             $mail->isHTML(true);
