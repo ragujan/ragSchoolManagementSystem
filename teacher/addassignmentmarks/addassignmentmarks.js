@@ -1,6 +1,6 @@
 showstudents =()=>{
     const grade = document.getElementById('studentgrade');
-    console.log(grade.value);
+   
 
     let url = "../../teacher/addassignmentmarks/showstudentsassignments.php";
     const form = new FormData();
@@ -12,8 +12,10 @@ showstudents =()=>{
         .then((response) => response.text())
         .then((text) => {
             console.log(text);
+            document.getElementById('showsomething').innerHTML=text;
             if (text.trim() == "Success") {
                 loadshowlessonnotes();
+
             }
 
         });

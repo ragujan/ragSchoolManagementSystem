@@ -24,18 +24,39 @@ class TeacherQuery extends DBh
 
         return $fetchRows;
     }
-    public function getstudentsbygrade($gradeid){
+    public function getstudentsbygrade($gradeid)
+    {
         $query = "SELECT * FROM student WHERE grade_id =?";
         $statement = $this->connect()->prepare($query);
         $statement->execute([$gradeid]);
         $rowFounds = $statement->rowCount();
-        if($rowFounds>=1){
+        if ($rowFounds >= 1) {
             $fetchRows = $statement->fetchAll();
             $this->rowCount = $rowFounds;
-        }else{
+        } else {
             $fetchRows = array("Nothing");
             $this->rowCount = 0;
         }
+        return $fetchRows;
+    }
+
+    public function getsubmittedstudentbygrade($gradeid,$subjectid)
+    {
+        $query = "SELECT * FROM student
+        INNER JOIN student_assignment
+        ON student.student_id = student_assignment.student_id
+        WHERE student_assignment.grade_id = ? AND subject_id =?";
+        $statement = $this->connect()->prepare($query);
+        $statement->execute([$gradeid,$subjectid]);
+        $rowFounds = $statement->rowCount();
+        if ($rowFounds >= 1) {
+            $fetchRows = $statement->fetchAll();
+            $this->rowCount = $rowFounds;
+        } else {
+            $fetchRows = array("Nothing");
+            $this->rowCount = 0;
+        }
+        return $fetchRows;
     }
 
 
