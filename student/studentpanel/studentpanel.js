@@ -10,6 +10,9 @@ viewlessonnotes =()=>{
 viewassignments =()=>{
     window.location ="../../student/viewassignments/viewassignments.php";
 }
+viewresults =()=>{
+    window.location = "../../student/viewresults/viewresults.php";
+}
 logout =()=>{
     window.location ="../../student/logout/logout.php";
 }

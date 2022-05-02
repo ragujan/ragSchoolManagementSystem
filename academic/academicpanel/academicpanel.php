@@ -36,14 +36,12 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
                                 <div class="col-6">
                                     <button onclick="viewassignmentresults();" class="py-2 px-3 fw-bold my-auto w-100">View submitted answers </button>
                                 </div>
-                                <div class="col-6">
-                                    <button class="py-2 px-3 fw-bold my-auto w-100">Add assignment marks</button>
-                                </div>
+                          
                                 <div class="col-6">
                                     <button onclick=";" class="py-2 px-3 fw-bold my-auto w-100">Update profile</button>
                                 </div>
                                 <div class="col-6">
-                                    <button class="py-2 px-3 fw-bold my-auto w-100">Log Out</button>
+                                    <button onclick="academiclogout();" class="py-2 px-3 fw-bold my-auto w-100">Log Out</button>
                                 </div>
                             </div>
                         </div>
