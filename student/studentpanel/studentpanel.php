@@ -25,6 +25,24 @@ if (!isset($_SESSION["student_logged_in_session"])) {
             <div class="row">
                 <div class="col-12">
                     <div class="row">
+                        <?php
+                        require_once "../../student/studentQuery/studentQuery.php";
+                        $studentmail = $_SESSION["student_logged_in_session"];
+                        $query = new StudentQuery();
+
+                        $getstudentdetails = $query->getstudentDetails($studentmail);
+                        $studentsubjectid = $getstudentdetails[0][5];
+                        $student_id = $getstudentdetails[0][0];
+                        $studentgrade =  $getstudentdetails[0][8];
+                        $studentfname =  $getstudentdetails[0][1];
+                        $studentlname=  $getstudentdetails[0][2];
+                        $querylesson = $query->getlessonnotes($studentgrade);
+                        ?>
+                        <div class="ps-4 col-lg-4 col-12 pb-4"><span><?php echo $studentfname. " " .$studentlname; ?></span></div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="row">
                         <div class="col-lg-5 col-md-6 col-12 px-4  AdminWorkOptions">
                             <div class="row gy-3">
                                 <div class="col-6">
@@ -37,7 +55,7 @@ if (!isset($_SESSION["student_logged_in_session"])) {
                                     <button onclick="uploadassignment();" class="py-2 px-3 fw-bold my-auto w-100 ragFancyButton">Upload Assignments </button>
                                 </div>
                                 <div class="col-6">
-                                    <button class="py-2 px-3 fw-bold my-auto w-100 ragFancyButton">View assignment marks</button>
+                                    <button onclick="viewresults();" class="py-2 px-3 fw-bold my-auto w-100 ragFancyButton">View assignment marks</button>
                                 </div>
                                 <div class="col-6">
                                     <button onclick=";" class="py-2 px-3 fw-bold my-auto w-100 ragFancyButton">Update profile</button>

@@ -26,7 +26,27 @@ getstudentresults = ()=>{
     fetch(url, { body: form, method: "POST" })
         .then((response) => response.text())
         .then((text) => {
-             console.log(text);
+             
              document.getElementById('showsubmittedstudentsresults').innerHTML=text;
         });
+}
+
+approveresult = (id)=>{
+     console.log(id);
+     const errormessagediv = document.getElementById('showerrormessagediv');
+     let url = "../../academic/sendstudentresult/approveresultprocess.php";
+     const form = new FormData();
+     form.append("student_assignment_id", id);
+     fetch(url, { body: form, method: "POST" })
+         .then((response) => response.text())
+         .then((text) => {
+              if(text=="Success"){
+                errormessagediv.innerHTML ="";
+                 console.log(text);
+              }else{
+                errormessagediv.style.color ="red";  
+                errormessagediv.innerHTML =text;
+              }
+              
+         });
 }

@@ -30,6 +30,9 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
                         </div>
                     </div>
                 </div>
+                <div id="showerrormessagediv" class="col-12">
+
+                </div>
                 <div class="col-12 " id="teachershowassignmentsdiv">
                     <div class="row">
                         <div class="col-6">
