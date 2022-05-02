@@ -147,7 +147,21 @@ class StudentQuery extends DBh
 
         return $fetchRows;
     }
+     public function getstudentbystudentid($id){
+        $query = "SELECT * FROM `student` WHERE student.student_id =? ";
+        $statement = $this->connect()->prepare($query);
+        $statement->execute([$id]);
+        $rowFounds = $statement->rowCount();
+        if ($rowFounds >= 1) {
+            $fetchRows = $statement->fetchAll();
+            $this->rowCount = $rowFounds;
+        } else {
+            $fetchRows = array("Nothing");
+            $this->rowCount = 0;
+        }
 
+        return $fetchRows;
+     }
 
     public function insertstudent($fname, $lname, $email, $age, $gender,$date,$gradeid)
     {
@@ -343,4 +357,63 @@ class StudentQuery extends DBh
 
         return $state;
     }
+
+    public function getsubmittedstudentbygradeid($gradeid){
+        $query ="SELECT * FROM student_assignment WHERE 
+        student_assignment.grade_id = ?";
+          $stmt = $this->connect()->prepare($query);
+          $stmt->execute([$gradeid]);
+          $rowFounds = $stmt ->rowCount();
+          if ($rowFounds >= 1) {
+              $fetchRows = $stmt ->fetchAll();
+              $this->rowCount = $rowFounds;
+          } else {
+              $fetchRows = array("Nothing");
+              $this->rowCount = 0;
+          }
+  
+          return $fetchRows;
+    }
+    public function getsumittedstudentbystudentid($studentid){
+        $query ="SELECT * FROM student_assignment
+        INNER JOIN teacher_assignment
+        ON teacher_assignment.assignment_id = student_assignment.assignment_id
+        INNER JOIN student
+        ON student.student_id = student_assignment.student_id 
+        INNER JOIN subject
+        ON subject.subject_id = student_assignment.subject_id
+        INNER JOIN result 
+        ON result.result_id = student_assignment.student_results
+        WHERE 
+        student_assignment.student_id = ?";
+          $stmt = $this->connect()->prepare($query);
+          $stmt->execute([$studentid]);
+          $rowFounds = $stmt ->rowCount();
+          if ($rowFounds >= 1) {
+              $fetchRows = $stmt ->fetchAll();
+              $this->rowCount = $rowFounds;
+          } else {
+              $fetchRows = array("Nothing");
+              $this->rowCount = 0;
+          }
+  
+          return $fetchRows;
+    }
+    public function getstudentbygrade($gradeid){
+        $query ="SELECT * FROM student WHERE 
+        student.grade_id = ?";
+          $stmt = $this->connect()->prepare($query);
+          $stmt->execute([$gradeid]);
+          $rowFounds = $stmt ->rowCount();
+          if ($rowFounds >= 1) {
+              $fetchRows = $stmt ->fetchAll();
+              $this->rowCount = $rowFounds;
+          } else {
+              $fetchRows = array("Nothing");
+              $this->rowCount = 0;
+          }
+  
+          return $fetchRows;
+    }
+
 }
