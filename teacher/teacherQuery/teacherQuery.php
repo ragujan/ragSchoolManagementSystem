@@ -40,14 +40,14 @@ class TeacherQuery extends DBh
         return $fetchRows;
     }
 
-    public function getsubmittedstudentbygrade($gradeid,$subjectid)
+    public function getsubmittedstudentbygrade($gradeid, $subjectid)
     {
         $query = "SELECT * FROM student
         INNER JOIN student_assignment
         ON student.student_id = student_assignment.student_id
         WHERE student_assignment.grade_id = ? AND subject_id =?";
         $statement = $this->connect()->prepare($query);
-        $statement->execute([$gradeid,$subjectid]);
+        $statement->execute([$gradeid, $subjectid]);
         $rowFounds = $statement->rowCount();
         if ($rowFounds >= 1) {
             $fetchRows = $statement->fetchAll();
@@ -58,7 +58,44 @@ class TeacherQuery extends DBh
         }
         return $fetchRows;
     }
+    public function getstudentsubmissionsbystudentid($studentid, $subjectid)
+    {
 
+        $query = "
+        SELECT student_assignment.assignmentsrc,
+student_assignment.uploaded_date,
+student_assignment.student_id,
+student_assignment.student_results,
+student_assignment.grade_id,
+student_assignment.subject_id,
+student_assignment.assignment_id,
+student_assignment.student_assignment_id,
+student.student_fname,
+student.grade_id,
+student.student_email,
+teacher_assignment.assignment_name,
+teacher_assignment.assignment_due_date
+        
+        FROM student
+        INNER JOIN student_assignment
+        ON student.student_id = student_assignment.student_id
+        INNER JOIN teacher_assignment
+        ON teacher_assignment.assignment_id =  student_assignment.assignment_id
+        WHERE  student_assignment.subject_id =? AND student_assignment.student_id =?";
+        $statement = $this->connect()->prepare($query);
+        $statement->execute([$subjectid, $studentid]);
+        $rowFounds = $statement->rowCount();
+        if ($rowFounds >= 1) {
+
+            $fetchRows = $statement->fetchAll();
+            $this->rowCount = $rowFounds;
+        } else {
+
+            $fetchRows = array("Nothing");
+            $this->rowCount = 0;
+        }
+        return $fetchRows;
+    }
 
     public function insertTeacher($fname, $lname, $email, $age, $gender, $grade, $subject)
     {

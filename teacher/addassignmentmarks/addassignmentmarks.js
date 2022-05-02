@@ -52,3 +52,14 @@ viewassignmentsindividual = (id) => {
 
     window.location = "../../teacher/addassignmentmarks/viewassignmentsindividual.php?X=" + id;
 }
+const marks = document.getElementById("assignmentmarks");
+if(marks){
+    marks.addEventListener('mousedown',()=>{
+        marksbutton = document.getElementById("marksbutton");
+        marksbutton.disabled =false;
+    })
+}
+entermarks=(aid,sid)=>{
+    const marks = document.getElementById("assignmentmarks");
+    console.log(aid+ "  "+sid);
+}
