@@ -13,6 +13,9 @@ viewassignments =()=>{
 viewresults =()=>{
     window.location = "../../student/viewresults/viewresults.php";
 }
+update = ()=>{
+    window.location = "../../student/updateprofile/updateprofile.php";
+}
 logout =()=>{
     window.location ="../../student/logout/logout.php";
 }

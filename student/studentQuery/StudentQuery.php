@@ -325,37 +325,39 @@ class StudentQuery extends DBh
 
         return $fetchRows;
     }
-    public function getassignments($gradeid,$studentid){
-        $query ="SELECT * FROM  student_assignment
+    public function getassignments($gradeid, $studentid)
+    {
+        $query = "SELECT * FROM  student_assignment
         INNER JOIN 
         teacher_assignment
         ON 
         teacher_assignment.assignment_id = student_assignment.assignment_id
         WHERE student_assignment.grade_id =  ? AND student_assignment.student_id =?";
         $assignmentstmt =  $this->connect()->prepare($query);
-        $assignmentstmt->execute([$gradeid,$studentid]);
+        $assignmentstmt->execute([$gradeid, $studentid]);
         $rowCount = $assignmentstmt->rowCount();
-        if($rowCount>=1){
+        if ($rowCount >= 1) {
             $fetchRows = $assignmentstmt->fetchAll();
             $this->rowCount = $rowCount;
-        }else{
+        } else {
             $fetchRows = array("Nothing");
             $this->rowCount = 0;
         }
         return $fetchRows;
     }
-    public function getteacherassignments($gradeid){
-        $query ="SELECT * FROM  teacher_assignment
+    public function getteacherassignments($gradeid)
+    {
+        $query = "SELECT * FROM  teacher_assignment
         INNER JOIN subject
         ON subject.subject_id = teacher_assignment.subject_id
         WHERE teacher_assignment.grade_id =  ?";
         $assignmentstmt =  $this->connect()->prepare($query);
         $assignmentstmt->execute([$gradeid]);
         $rowCount = $assignmentstmt->rowCount();
-        if($rowCount>=1){
+        if ($rowCount >= 1) {
             $fetchRows = $assignmentstmt->fetchAll();
             $this->rowCount = $rowCount;
-        }else{
+        } else {
             $fetchRows = array("Nothing");
             $this->rowCount = 0;
         }
@@ -477,6 +479,46 @@ class StudentQuery extends DBh
         }
         return $resultsArray;
     }
+    public function updatefnameNlname($email, $fname, $lname)
+    {
+        $state = false;
+        if (!$this->checkstudentEmail($email)) {
+            $query = "UPDATE student SET `student_fname`=?,`student_lname`=? 
+                     WHERE `student_email`=?";
+            $statement = $this->connect()->prepare($query);
+            $insertStatement = $statement->execute([$fname, $lname, $email]);
+            if ($insertStatement) {
+                $state = true;
+            }
+        }
+        return $state;
+    }
+
+    public function updatestudentpropic($id, $src)
+    {
+        if ($this->checkpropic($id)) {
+            $propicrow = $this->getpropic($id);
+            $earilersrc = $propicrow[0]['student_pro_pic_src'];
+            unlink($earilersrc);
+            
+
+            $query = "UPDATE student_pro_pic SET `student_pro_pic_src`=? 
+            WHERE `student_id`=?";
+            $statement = $this->connect()->prepare($query);
+            $insertStatement = $statement->execute([$src, $id]);
+            if ($insertStatement) {
+                $state = true;
+            }
+        } else {
+            $query = "INSERT INTO student_pro_pic  (`student_pro_pic_src`,`student_id`)
+            VALUES(?,?)";
+            $statement = $this->connect()->prepare($query);
+            $insertStatement = $statement->execute([$src, $id]);
+            if ($insertStatement) {
+                $state = true;
+            }
+        }
+    }
     public function updatestudent($fname, $lname, $email, $age, $gender)
     {
         $state = false;
@@ -546,7 +588,8 @@ class StudentQuery extends DBh
 
         return $fetchRows;
     }
-    public function getstudentDetailsbyid($id){
+    public function getstudentDetailsbyid($id)
+    {
         $state = false;
         $studentCheckQuery = "SELECT * FROM `student` WHERE `student_id`=?";
         $studentCheckStmt = $this->connect()->prepare($studentCheckQuery);
@@ -638,24 +681,26 @@ class StudentQuery extends DBh
         $statement = $this->connect()->prepare($query);
         $statement->execute([$code]);
     }
-    public function getsubmittedstudentbygradeid($gradeid){
-        $query ="SELECT * FROM student_assignment WHERE 
+    public function getsubmittedstudentbygradeid($gradeid)
+    {
+        $query = "SELECT * FROM student_assignment WHERE 
         student_assignment.grade_id = ?";
-          $stmt = $this->connect()->prepare($query);
-          $stmt->execute([$gradeid]);
-          $rowFounds = $stmt ->rowCount();
-          if ($rowFounds >= 1) {
-              $fetchRows = $stmt ->fetchAll();
-              $this->rowCount = $rowFounds;
-          } else {
-              $fetchRows = array("Nothing");
-              $this->rowCount = 0;
-          }
-  
-          return $fetchRows;
+        $stmt = $this->connect()->prepare($query);
+        $stmt->execute([$gradeid]);
+        $rowFounds = $stmt->rowCount();
+        if ($rowFounds >= 1) {
+            $fetchRows = $stmt->fetchAll();
+            $this->rowCount = $rowFounds;
+        } else {
+            $fetchRows = array("Nothing");
+            $this->rowCount = 0;
+        }
+
+        return $fetchRows;
     }
-    public function getsumittedstudentbystudentid($studentid){
-        $query ="SELECT * FROM approved_results
+    public function getsumittedstudentbystudentid($studentid)
+    {
+        $query = "SELECT * FROM approved_results
         INNER JOIN student_assignment
         ON student_assignment.student_assignment_id = approved_results.student_assignment_id
         INNER JOIN teacher_assignment
@@ -665,17 +710,52 @@ class StudentQuery extends DBh
         INNER JOIN result
         ON result.result_id = student_assignment.student_results
         WHERE student_assignment.student_id = ?";
-          $stmt = $this->connect()->prepare($query);
-          $stmt->execute([$studentid]);
-          $rowFounds = $stmt ->rowCount();
-          if ($rowFounds >= 1) {
-              $fetchRows = $stmt ->fetchAll();
-              $this->rowCount = $rowFounds;
-          } else {
-              $fetchRows = array("Nothing");
-              $this->rowCount = 0;
-          }
-  
-          return $fetchRows;
+        $stmt = $this->connect()->prepare($query);
+        $stmt->execute([$studentid]);
+        $rowFounds = $stmt->rowCount();
+        if ($rowFounds >= 1) {
+            $fetchRows = $stmt->fetchAll();
+            $this->rowCount = $rowFounds;
+        } else {
+            $fetchRows = array("Nothing");
+            $this->rowCount = 0;
+        }
+
+        return $fetchRows;
+    }
+
+    public function checkpropic($id)
+    {
+        $state = false;
+        $CheckQuery = "SELECT * FROM student_pro_pic
+        WHERE student_pro_pic.student_id = ? ";
+        $CheckStmt = $this->connect()->prepare($CheckQuery);
+        $CheckStmt->execute([$id]);
+        $rowFounds = $CheckStmt->rowCount();
+        if ($rowFounds == 1) {
+            $state = true;
+        } else {
+            $state = false;
+        }
+
+        return $state;
+    }
+    public function getpropic($id)
+    {
+        if ($this->checkpropic($id)) {
+            $query = "SELECT * FROM student_pro_pic
+            WHERE student_pro_pic.student_id = ?";
+            $stmt = $this->connect()->prepare($query);
+            $stmt->execute([$id]);
+            $rowFounds = $stmt->rowCount();
+            if ($rowFounds >= 1) {
+                $fetchRows = $stmt->fetchAll();
+                $this->rowCount = $rowFounds;
+            } else {
+                $fetchRows = array("Nothing");
+                $this->rowCount = 0;
+            }
+            return $fetchRows;
+        }
     }
 }
