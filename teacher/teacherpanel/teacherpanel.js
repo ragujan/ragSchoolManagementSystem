@@ -9,6 +9,9 @@ goAssignments = ()=>{
 addassignmentmarks =()=>{
     window.location ="../../teacher/addassignmentmarks/addassignmentmarks.php";
 }
+updateprofile =()=>{
+    window.location ="../../teacher/updateprofile/updateprofile.php";  
+}
 logout =()=>{
     window.location ="../../teacher/logout/logout.php";
 }

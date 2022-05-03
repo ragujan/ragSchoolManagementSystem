@@ -1,17 +1,17 @@
 <?php
 session_start();
-if (!isset($_SESSION["student_logged_in_session"])) {
-    header('Location: /webAssignment/student/studentlogin/studentlogin.php');
+if (!isset($_SESSION["academic_logged_in_session"])) {
+    header('Location: /webAssignment/academic/academiclogin/academiclogin.php');
 }
-require_once "../../student/studentQuery/studentQuery.php";
-$studentmail = $_SESSION["student_logged_in_session"];
-$query = new StudentQuery();
-$getstudentdetails = $query->getstudentDetails($studentmail);
+require_once "../../academic/academicQuery/academicQuery.php";
+$academicmail = $_SESSION["academic_logged_in_session"];
+$query = new academicQuery();
+$getacademicdetails = $query->getacademicDetails($academicmail);
 
-$student_id = $getstudentdetails[0][0];
-$studentgrade =  $getstudentdetails[0][8];
-$studentfname =  $getstudentdetails[0][1];
-$studentlname =  $getstudentdetails[0][2];
+$academic_id = $getacademicdetails[0][0];
+$academicgrade =  $getacademicdetails[0][8];
+$academicfname =  $getacademicdetails[0][1];
+$academiclname =  $getacademicdetails[0][2];
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +23,7 @@ $studentlname =  $getstudentdetails[0][2];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../style/bootstrap.css">
     <link rel="stylesheet" href="../../style/global.css">
-    <link rel="stylesheet" href="../../style/student.css">
+    <link rel="stylesheet" href="../../style/academic.css">
     <title>Update Profile</title>
 </head>
 
@@ -32,17 +32,17 @@ $studentlname =  $getstudentdetails[0][2];
         <div class="col-12 ">
             <div class="row">
                 <div class="col-4 ">
-                    <span>Go Back to Main Panel</span> <a href="../../student/studentpanel/studentpanel.php" class="text-decoration-none">student Panel</a>
+                    <span>Go Back to Main Panel</span> <a href="../../academic/academicpanel/academicpanel.php" class="text-decoration-none">academic Panel</a>
                 </div>
             </div>
         </div>
         <div class="mx-0 col-12 d-none uploadpropicdiv" id="uploadpropicdiv">
             <div class="row">
                 <div class=" col-12">
-                    <label  for="uploadpropic" class="ragFancyButton">Upload Propic</label>
+                    <label on="uploadpropicdiv();" for="uploadpropic" class="ragFancyButton">Upload Propic</label>
                     <input onchange="uploadpropicdiv();" id="uploadpropic" type="file" class="d-none">
                     <?php
-                    $checkpropic = $query->checkpropic($student_id);
+                    $checkpropic = $query->checkpropic($academic_id);
                     if ($checkpropic) {
                     ?>
                         <button onclick="removepropic();" class="ragFancyButtonRed">Remove Propic</button>
@@ -64,28 +64,28 @@ $studentlname =  $getstudentdetails[0][2];
                     <div class="row">
                         <?php
 
-                        $querylesson = $query->getlessonnotes($studentgrade);
+                        
                         ?>
-                        <div class="ps-4 col-lg-4 col-12 pb-4"><span><?php echo $studentfname . " " . $studentlname; ?></span></div>
+                        <div class="ps-4 col-lg-4 col-12 pb-4"><span><?php echo $academicfname . " " . $academiclname; ?></span></div>
                     </div>
                 </div>
 
-                <div class="col-12 " id="studentUpdateDiv">
+                <div class="col-12 " id="academicUpdateDiv">
                     <div class="row">
                         <div class="col-12 text-center ">
-                            <span class="fw-bold text-danger" id="upAddstudenterrormessage"></span>
+                            <span class="fw-bold text-danger" id="upAddacademicerrormessage"></span>
                         </div>
                         <div class="col-6">
-                            <span>student_first_name</span>
-                            <input type="text" id="upstudentfname" value="<?php echo $studentfname; ?>" class="w-100 px-2 py-2">
+                            <span>academic_first_name</span>
+                            <input type="text" id="upacademicfname" value="<?php echo $academicfname; ?>" class="w-100 px-2 py-2">
                         </div>
                         <div class="col-6">
-                            <span>student_last_name</span>
-                            <input type="text" id="upstudentlname" value="<?php echo $studentlname; ?>" class="w-100 px-2 py-2">
+                            <span>academic_last_name</span>
+                            <input type="text" id="upacademiclname" value="<?php echo $academiclname; ?>" class="w-100 px-2 py-2">
                         </div>
                         <div class="col-6">
-                            <span>student_email</span>
-                            <input type="text" disabled readonly value="<?php echo $studentmail; ?>" class="w-100 px-2 py-2">
+                            <span>academic_email</span>
+                            <input type="text" disabled readonly value="<?php echo $academicmail; ?>" class="w-100 px-2 py-2">
                         </div>
 
                         <div class="col-6 pt-4">
@@ -96,7 +96,7 @@ $studentlname =  $getstudentdetails[0][2];
 
 
                         <div class="col-12 text-center py-4">
-                            <button onclick="upDatestudent();" class="px-2 py-2 w-50">Update Profile</button>
+                            <button onclick="upDateacademic();" class="px-2 py-2 w-50">Update Profile</button>
                         </div>
                     </div>
                 </div>

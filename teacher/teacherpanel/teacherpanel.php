@@ -49,7 +49,7 @@ $email= $_SESSION["teacher_logged_in_session"];
                                     <button onclick="addassignmentmarks();" class="py-2 px-3 fw-bold my-auto w-100">Add assignment marks</button>
                                 </div>
                                 <div class="col-6">
-                                    <button onclick=";" class="py-2 px-3 fw-bold my-auto w-100">Update profile</button>
+                                    <button onclick="updateprofile();" class="py-2 px-3 fw-bold my-auto w-100">Update profile</button>
                                 </div>
                                 <div class="col-6">
                                     <button onclick="logout();" class="py-2 px-3 fw-bold my-auto w-100">Log Out</button>

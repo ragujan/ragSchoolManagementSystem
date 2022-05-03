@@ -2,14 +2,14 @@ uploadpropicdiv=()=>{
     const uploadpropic = document.getElementById("uploadpropicdiv");
     uploadpropic.classList.toggle("d-none");
 }
-upDatestudent =()=>{
-    const fname = document.getElementById('upstudentfname');
-    const lname = document.getElementById('upstudentlname');
+upDateteacher =()=>{
+    const fname = document.getElementById('upteacherfname');
+    const lname = document.getElementById('upteacherlname');
     const propic  =document.getElementById('uploadpropic'); 
     console.log(propic.files[0]);
     console.log(fname.value);
     console.log(lname.value);
-    let url = "../../student/updateprofile/updateprofileprocess.php";
+    let url = "../../teacher/updateprofile/updateprofileprocess.php";
     const form = new FormData();
     form.append("fname", fname.value);
     form.append("lname", lname.value);
@@ -26,10 +26,9 @@ upDatestudent =()=>{
             }
         });
 }
-
 removepropic =()=>{
-    console.log('LOG');
-    let url = "../../student/updateprofile/removepropicprocess.php";
+    
+    let url = "../../teacher/updateprofile/removepropicprocess.php";
     fetch(url)
     .then((response) => response.text())
     .then((text) => {

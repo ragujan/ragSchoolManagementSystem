@@ -247,6 +247,46 @@ result.result_name
         }
         return $resultsArray;
     }
+    public function updatefnameNlname($email, $fname, $lname)
+    {
+        $state = false;
+        if (!$this->checkteacherEmail($email)) {
+            $query = "UPDATE teacher SET `teacher_fname`=?,`teacher_lname`=? 
+                     WHERE `teacher_email`=?";
+            $statement = $this->connect()->prepare($query);
+            $insertStatement = $statement->execute([$fname, $lname, $email]);
+            if ($insertStatement) {
+                $state = true;
+            }
+        }
+        return $state;
+    }
+
+    public function updateteacherpropic($id, $src)
+    {
+        if ($this->checkpropic($id)) {
+            $propicrow = $this->getpropic($id);
+            $earilersrc = $propicrow[0]['teacher_pro_pic_src'];
+            unlink($earilersrc);
+            
+
+            $query = "UPDATE teacher_pro_pic SET `teacher_pro_pic_src`=? 
+            WHERE `teacher_id`=?";
+            $statement = $this->connect()->prepare($query);
+            $insertStatement = $statement->execute([$src, $id]);
+            if ($insertStatement) {
+                $state = true;
+            }
+        } else {
+            $query = "INSERT INTO teacher_pro_pic  (`teacher_pro_pic_src`,`teacher_id`)
+            VALUES(?,?)";
+            $statement = $this->connect()->prepare($query);
+            $insertStatement = $statement->execute([$src, $id]);
+            if ($insertStatement) {
+                $state = true;
+            }
+        }
+    }
     public function updateTeacher($fname, $lname, $email, $age, $gender, $grade, $subject)
     {
         $state = false;
@@ -566,5 +606,56 @@ result.result_name
         }
 
         return $fetchRows;
+    }
+    public function checkpropic($id)
+    {
+        $state = false;
+        $CheckQuery = "SELECT * FROM teacher_pro_pic
+        WHERE teacher_pro_pic.teacher_id = ? ";
+        $CheckStmt = $this->connect()->prepare($CheckQuery);
+        $CheckStmt->execute([$id]);
+        $rowFounds = $CheckStmt->rowCount();
+        if ($rowFounds == 1) {
+            $state = true;
+        } else {
+            $state = false;
+        }
+
+        return $state;
+    }
+    public function getpropic($id)
+    {
+        if ($this->checkpropic($id)) {
+            $query = "SELECT * FROM teacher_pro_pic
+            WHERE teacher_pro_pic.teacher_id = ?";
+            $stmt = $this->connect()->prepare($query);
+            $stmt->execute([$id]);
+            $rowFounds = $stmt->rowCount();
+            if ($rowFounds >= 1) {
+                $fetchRows = $stmt->fetchAll();
+                $this->rowCount = $rowFounds;
+            } else {
+                $fetchRows = array("Nothing");
+                $this->rowCount = 0;
+            }
+            return $fetchRows;
+        }
+    }
+    public function removepropic($id)
+    {   $state=false;
+        if ($this->checkpropic($id)) {
+            $propicrow = $this->getpropic($id);
+            $earilersrc = $propicrow[0]['teacher_pro_pic_src'];
+            unlink($earilersrc);
+            $query = "DELETE FROM teacher_pro_pic
+            WHERE teacher_pro_pic.teacher_id = ?";
+            $stmt = $this->connect()->prepare($query);
+            $stmtCheck = $stmt->execute([$id]);
+            if($stmtCheck){
+                $state=true;
+            }
+        }
+
+        return $state;
     }
 }
