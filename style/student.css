@@ -134,3 +134,20 @@ body {
     width: 30px;
     max-width: 100%;
 }
+.uploadpropicdiv{
+    background-color: black;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.ragFancyButtonRed{
+    border: rgb(0, 63, 236) solid 1px;
+    border-radius: 4px;
+    background-color: rgb(117, 0, 0);
+    color: rgb(255, 255, 255);
+  
+}
