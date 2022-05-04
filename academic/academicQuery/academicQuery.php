@@ -1,4 +1,5 @@
 <?php
+//academic requred search queries 
 require_once "../../PDODB/DBh.php";
 class AcademicQuery extends DBh
 {
@@ -150,7 +151,8 @@ class AcademicQuery extends DBh
 
 
     public function insertacademic($fname, $lname, $email, $age, $gender)
-    {
+    {     //instead of saving the password directly used hasing so 
+           //even if the database get losts the password won't be broken 
         $emailCheck =  $this->checkacademicEmailForEmail($email);
         if ($emailCheck) {
             $random = rand();
@@ -266,6 +268,27 @@ class AcademicQuery extends DBh
         }
         return $state;
     }
+
+    public function changestudentstatus($email)
+    {
+        if($this->checkstudentstatus($email)){
+           
+        }
+    }
+    public function getstudentstatus($email){
+
+    }
+    public function checkstudentstatus($email)
+    {
+        $state = false;
+        $query = "SELECT * FROM student WHERE student.student_email=? ";
+        $stmt = $this->connect()->prepare($query);
+        $stmt->execute([$email]);
+        if($stmt->rowCount()==1){
+            $state = true;
+        }                 
+        return $state;
+    }
     public function updatefnameNlname($email, $fname, $lname)
     {
         $state = false;
@@ -287,7 +310,7 @@ class AcademicQuery extends DBh
             $propicrow = $this->getpropic($id);
             $earilersrc = $propicrow[0]['academic_pro_pic_src'];
             unlink($earilersrc);
-            
+
 
             $query = "UPDATE academic_pro_pic SET `academic_pro_pic_src`=? 
             WHERE `academic_id`=?";

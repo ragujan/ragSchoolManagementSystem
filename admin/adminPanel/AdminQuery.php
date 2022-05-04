@@ -1,4 +1,7 @@
 <?php
+//queries that are related with admin table or admin related stuffs
+//used to PDO drivers instead of mysqli 
+//also used prepared statements to prevent sql injections, hopefully
 require_once "../../PDODB/DBh.php";
 class AdminQuery extends DBh
 {

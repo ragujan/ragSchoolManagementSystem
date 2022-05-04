@@ -1,3 +1,5 @@
+//mostly sending data to the server side back and forth
+
 getsubjects=()=>{
     const grade = document.getElementById('studentgrade');
     const showsummitteddiv = document.getElementById('showsubmittedstudents');

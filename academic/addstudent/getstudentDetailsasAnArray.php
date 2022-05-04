@@ -3,15 +3,19 @@ session_start();
 if (!isset($_SESSION["academic_logged_in_session"])) {
     exit();
 } else {
+    //get specific student details then return back the 
+    //student details as an array 
     if (isset($_POST["id"]) && isset($_POST["email"])) {
         $id = $_POST["id"];
         $email = $_POST["email"];
         require_once "../../inputValidations/ValidateInputs.php";
         $id = $_POST["id"];
         $email = $_POST["email"];
+        //validation part
         $validation = new ValidateInputs();
         $valiStatus1 = $validation->intIDvalid($id);
         $valiStatus2 = $validation->mailVali($email);
+        //if validation is true 
         if ($valiStatus1 && $valiStatus2) {
             require_once "../../academic/studentQuery/studentQuery.php";
             $query = new StudentQuery();
@@ -30,7 +34,7 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
             $studentDueDate = $querystudent[0][9];
 
             $studentArray = array($studentID, $studentEmail, $studentFName, $studentLName, $studentGender, $studentAge, $studentGrade, $studentDueDate);
-
+            //to get the student details in the client side
             echo json_encode($studentArray);
         }
     }

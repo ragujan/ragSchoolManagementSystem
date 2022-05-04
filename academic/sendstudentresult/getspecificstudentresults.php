@@ -4,14 +4,18 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
     exit();
 } else {
     if (isset($_POST["student_id"])) {
+        //receive the student_id via post method
         $student_id = $_POST["student_id"];
 
         require_once "../../inputValidations/ValidateInputs.php";
         require_once "../../academic/studentQuery/StudentQuery.php";
+        //validation part
         $validation = new ValidateInputs();
         $validstudent_id = $validation->intIDvalid($student_id);
         if ($validstudent_id) {
             $studentQuery = new StudentQuery();
+            //check the student_assignment table if the student id is there there in any
+            //of the rows if its there return those rows
             $submittedstudentassignments = $studentQuery->getsumittedstudentbystudentid($student_id);
 
             $rowCount = count($submittedstudentassignments);

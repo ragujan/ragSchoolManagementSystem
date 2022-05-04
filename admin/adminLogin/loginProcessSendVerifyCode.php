@@ -3,7 +3,7 @@ if(isset($_POST["email"])){
     $e = $_POST["email"];
     $random = rand();
     $code = hash('md5', $random);
-
+  //to send the verify code in the email create the email object
     require "../../SendMail/SendMail.php";
     $emailSender = new SendMail();
     $emailSender->setSenderEmail($e);
@@ -26,6 +26,3 @@ if(isset($_POST["email"])){
      
     }
 }
-
-
-?>

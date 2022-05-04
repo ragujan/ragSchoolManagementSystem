@@ -4,7 +4,10 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
     exit();
 } else {
     if (isset($_POST["e"]) && isset($_POST["fn"]) && isset($_POST["ln"]) && isset($_POST["a"])  && isset($_POST["gn"])) {
-       $valiStatus =false;
+       //receive the required inputs to update the student row
+       //assign them to variables
+       //validate them 
+        $valiStatus =false;
         $e = $_POST["e"];
         $fn = $_POST["fn"];
         $ln = $_POST["ln"];
@@ -57,9 +60,10 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
         }
   
         if($valiStatus){
-            
+            //if validations are success
             require_once "../../academic/studentQuery/studentQuery.php";
             $queryObject = new StudentQuery();
+            //write the update query and update the student table
             $queryObject->updatestudent($fn,$ln,$e,$a,$gn);
             if($queryObject){
                 echo "Update Success";

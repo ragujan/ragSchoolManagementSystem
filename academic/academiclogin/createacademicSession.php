@@ -2,7 +2,8 @@
 
 session_start();
 
-
+//session checking if its there assign assign sessionvariableonvarifycode to admin sesssion 
+//unset the sessionvariableonvarifycode
 if (!isset($_SESSION["verifyCodeEmail"]) || !isset($_SESSION["sessionVariableOnVerifyCode"])) {
     
     header('Location: /webAssignment/admin/adminLogin/login.php');

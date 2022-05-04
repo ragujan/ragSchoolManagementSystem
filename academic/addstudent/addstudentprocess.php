@@ -5,6 +5,7 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
     exit();
 } else {
     if (isset($_POST["e"]) && isset($_POST["g"]) && isset($_POST["duedate"]) && isset($_POST["fn"]) && isset($_POST["ln"]) && isset($_POST["a"])    && isset($_POST["gn"])) {
+       //assign the values to the variables
         $valiStatus = false;
         $e = $_POST["e"];
         $fn = $_POST["fn"];
@@ -16,7 +17,7 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
 
       
         require_once "../../inputValidations/ValidateInputs.php";
-
+       //validate input fields
         $validation = new ValidateInputs();
 
         $emailStatus = $validation->mailVali($e);
@@ -63,17 +64,20 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
 
             $valiStatus = false;
         }
-
+          //if every input field is valid then 
+          //change the status vali to true;
         if ($fnameStatus && $lnameStatus && $emailStatus && $ageVali && $genderVali && $duedateVali && $gradeVali) {
             $valiStatus = true;
         }
 
         if ($valiStatus) {
-            
+            //insert query for student table
+        
             require_once "../../academic/studentQuery/studentQuery.php";
             $queryObject = new StudentQuery();
             $queryObject->insertstudent($fn, $ln, $e, $a, $gn,$due, $g);
             if ($queryObject) {
+                //echos abc to confirm in the client side
                 echo "abc";
             } else {
                 echo "failed";

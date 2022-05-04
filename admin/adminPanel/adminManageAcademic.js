@@ -1,7 +1,13 @@
+//most of these functions are to send data to the respective server sides 
+//using fetch api instead of ajax
+
+
+//do stuffs when the window loads
 window.addEventListener("load", () => {
     const subjectNameDiv = document.getElementById("subjectName");
     const gradeNameDiv = document.getElementById("gradeName");
     const academicNameDiv = document.getElementById("academicsList");
+    //checking if the elements are defined or not
     if (academicNameDiv) {
         let url1 = "../../admin/adminPanel/getacademics.php";
 
