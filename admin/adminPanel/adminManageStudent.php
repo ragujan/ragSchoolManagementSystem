@@ -16,7 +16,7 @@ if (!isset($_SESSION['AdminSession'])) {
     <link rel="stylesheet" href="../../style/bootstrap.css">
     <link rel="stylesheet" href="../../style/global.css">
     <link rel="stylesheet" href="../../style/admin.css">
-    <title>Admin Panel</title>
+    <title>Admin Manage Students</title>
 </head>
 
 <body>

@@ -23,7 +23,7 @@ session_start();
  
 
 
-    <title>Document</title>
+    <title>Academic Login</title>
 </head>
 
 <body class="mainThemeColor">

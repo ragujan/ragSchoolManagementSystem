@@ -4,16 +4,17 @@ if (!isset($_SESSION["AdminSession"])) {
     exit();
 } else {
     if (isset($_POST["e"]) && isset($_POST["fn"]) && isset($_POST["ln"]) && isset($_POST["a"])  && isset($_POST["s"])  && isset($_POST["gn"])) {
-       $valiStatus =false;
+        //receive the required input values assign them to variables 
+        $valiStatus = false;
         $e = $_POST["e"];
         $fn = $_POST["fn"];
         $ln = $_POST["ln"];
         $a = $_POST["a"];
-       
+
         $s = $_POST["s"];
         $gn = $_POST["gn"];
         require_once "../../inputValidations/ValidateInputs.php";
-
+        //create a new Validation object to do the input validations
         $validation = new ValidateInputs();
 
         $emailStatus = $validation->mailVali($e);
@@ -21,62 +22,55 @@ if (!isset($_SESSION["AdminSession"])) {
         $lnameStatus = $validation->stringVali($ln);
         $ageVali = $validation->ageVali($a);
         $genderVali = $validation->genderVali($gn);
-      
-        if($fn==$ln){
+
+        if ($fn == $ln) {
             echo "first name last name cannot be same";
-            $valiStatus=false;
+            $valiStatus = false;
         }
-        if(!$emailStatus){
+        if (!$emailStatus) {
             echo "email value is not valid";
-            $valiStatus=false;
-          
+            $valiStatus = false;
         }
-        if(!$fnameStatus){
-           echo "first name value is not valid ";
-            $valiStatus=false;
-           
+        if (!$fnameStatus) {
+            echo "first name value is not valid ";
+            $valiStatus = false;
         }
-        if(!$lnameStatus){
+        if (!$lnameStatus) {
             echo "last name value is not valid ";
-             $valiStatus=false;
-            
-         }
-        if(!$ageVali){
-           
+            $valiStatus = false;
+        }
+        if (!$ageVali) {
+
             echo "age value is not valid ";
-            $valiStatus=false;
-          
+            $valiStatus = false;
         }
-        if(!$genderVali){
+        if (!$genderVali) {
             echo "gender value is not valid ";
-          
-            $valiStatus=false;
-           
+
+            $valiStatus = false;
         }
-   
-        if($fnameStatus && $lnameStatus && $emailStatus && $ageVali && $genderVali  ){
-            $valiStatus=true;
-        }
-  
-        if($valiStatus){
-            
-            require_once "../../admin/adminPanel/AdminQuery.php";
-            $queryObject = new AdminQuery();
-            $queryObject->insertTeacher($fn,$ln,$e,$a,$gn,$s);
-            if($queryObject){
-                echo "abc";
-            }else{
-                echo "failed";
-            }
-        }else{
-            echo " could not validate";
+        //if the validations are true then set the vali status to true
+        if ($fnameStatus && $lnameStatus && $emailStatus && $ageVali && $genderVali) {
+            $valiStatus = true;
         }
 
-     
-    }else{
-        
+        if ($valiStatus) {
+            //if the vali status is true then come to this block
+            require_once "../../admin/adminPanel/AdminQuery.php";
+            $queryObject = new AdminQuery();
+            //insert the validated input values to the teacher table
+            $queryObject->insertTeacher($fn, $ln, $e, $a, $gn, $s);
+            if ($queryObject) {
+                echo "abc";
+            } else {
+                echo "failed";
+            }
+        } else {
+            echo " could not validate";
+        }
+    } else {
     }
-   
+
 ?>
 
 <?php

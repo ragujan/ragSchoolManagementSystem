@@ -18,7 +18,7 @@ if(!isset($_SESSION["academic_session_mail"])){
  
 
 
-    <title>Document</title>
+    <title>Verify Code</title>
 </head>
 
 <body class="mainThemeColor">

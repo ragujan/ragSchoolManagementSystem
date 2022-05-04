@@ -16,7 +16,7 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
     <link rel="stylesheet" href="../../style/bootstrap.css">
     <link rel="stylesheet" href="../../style/global.css">
     <link rel="stylesheet" href="../../style/academic.css">
-    <title>Document</title>
+    <title>Academic Panel</title>
 </head>
 
 <body>

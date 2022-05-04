@@ -9,6 +9,7 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
             <div class="row">
 
                 <?php
+                //search query to get all the students in the student table
                 require_once "../../academic/studentQuery/studentQuery.php";
                 $query = new StudentQuery();
                 $queryStudent = $query->getstudents();

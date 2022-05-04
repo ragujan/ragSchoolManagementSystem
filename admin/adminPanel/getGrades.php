@@ -10,6 +10,7 @@ if (!isset($_SESSION["AdminSession"])) {
     <div class="row">
     
     <?php
+    //to get the grade write grade search query in the Admin Query class
     require_once "../../admin/adminPanel/AdminQuery.php";
     $query = new AdminQuery();
     $querySubjects = $query->getGrades();

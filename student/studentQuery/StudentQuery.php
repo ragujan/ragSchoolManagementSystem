@@ -500,7 +500,7 @@ class StudentQuery extends DBh
             $propicrow = $this->getpropic($id);
             $earilersrc = $propicrow[0]['student_pro_pic_src'];
             unlink($earilersrc);
-            
+
 
             $query = "UPDATE student_pro_pic SET `student_pro_pic_src`=? 
             WHERE `student_id`=?";
@@ -757,5 +757,22 @@ class StudentQuery extends DBh
             }
             return $fetchRows;
         }
+    }
+    public function removepropic($id)
+    {   $state=false;
+        if ($this->checkpropic($id)) {
+            $propicrow = $this->getpropic($id);
+            $earilersrc = $propicrow[0]['student_pro_pic_src'];
+            unlink($earilersrc);
+            $query = "DELETE FROM student_pro_pic
+            WHERE student_pro_pic.student_id = ?";
+            $stmt = $this->connect()->prepare($query);
+            $stmtCheck = $stmt->execute([$id]);
+            if($stmtCheck){
+                $state=true;
+            }
+        }
+
+        return $state;
     }
 }
