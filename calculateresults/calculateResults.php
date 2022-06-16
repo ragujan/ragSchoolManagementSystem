@@ -2,7 +2,7 @@
 class CalculateResults{
     private $result;
     function giveresults($marks,$sign){
-        
+        //create logics for student results using if else statements
         if($sign == "-"){
             $marks = $marks*(90/100);
             
@@ -22,7 +22,7 @@ class CalculateResults{
         if($marks >=75 ){
             $this->result = "A";
         }
-   
+        echo $this->result;
         return  $this->result;
     }
 }

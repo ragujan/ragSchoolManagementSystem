@@ -32,22 +32,22 @@ if (!isset($_SESSION["teacher_logged_in_session"])) {
 
                     <div class="col-12  subjectDivs my-1 py-5">
                         <div class="row gy-5 ">
-                            <div class="col-lg-4 col-md-2 col-12 py-2 py-md-1     text-start ">
+                            <div class="col-lg-6 col-md-2 col-12 py-2 py-md-1     text-start ">
                                 <span class="px-5 py-3 bg-primary w-100">assignment Title <?php echo $assignmentName; ?></span>
                             </div>
-                            <div class="col-lg-4 col-md-2 col-12 py-2 py-md-1   text-start ">
+                            <div class="col-lg-6 col-md-2 col-12 py-2 py-md-1   text-start ">
                                 <span class="px-5 py-3 bg-primary w-100">Subject <?php echo $subjectName; ?></span>
                             </div>
-                            <div class="col-lg-4 col-md-2 col-12 py-2 py-md-1   text-start ">
+                            <div class="col-lg-6 col-md-2 col-12 py-2 py-md-1   text-start ">
                                 <span class="px-5 py-3 bg-primary w-100">Grade <?php echo $gradeName; ?> </span>
                             </div>
 
-                            <div class="col-lg-4 col-md-2 col-12 py-2 py-md-1   text-start ">
+                            <div class="col-lg-6 col-md-2 col-12 py-2 py-md-1   text-start ">
 
                                 <a class="px-5 py-3 bg-primary w-100 text-white" href="<?php echo $assignmentSrc ?>">View PDF</a>
                             </div>
 
-                            <div class="col-lg-4 col-md-2 col-12 py-2 py-md-1   text-center">
+                            <div class="col-lg-6 col-md-2 col-12 py-2 py-md-1   text-center">
                                 <span style="cursor: pointer;" class="px-5 py-3 bg-primary" onclick="removetheassignment('<?php echo $teacherid?>','<?php echo $assignmentSrc?>');"  >Remove assignment Note </span>
 
                                   

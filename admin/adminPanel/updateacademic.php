@@ -5,7 +5,8 @@ if (!isset($_SESSION["AdminSession"])) {
 } else {
     if (isset($_POST["e"]) && isset($_POST["fn"]) && isset($_POST["ln"]) && isset($_POST["a"]) && isset($_POST["gn"])) {
        $valiStatus =false;
-        $e = $_POST["e"];
+       //to update the academic row must receive them first then have to assinn the values to variables
+       $e = $_POST["e"];
         $fn = $_POST["fn"];
         $ln = $_POST["ln"];
         $a = $_POST["a"];
@@ -14,7 +15,7 @@ if (!isset($_SESSION["AdminSession"])) {
         require_once "../../inputValidations/ValidateInputs.php";
 
         $validation = new ValidateInputs();
-
+        //have to do validations for those received values
         $emailStatus = $validation->mailVali($e);
         $fnameStatus = $validation->stringVali($fn);
         $lnameStatus = $validation->stringVali($ln);
@@ -52,7 +53,8 @@ if (!isset($_SESSION["AdminSession"])) {
             $valiStatus=false;
            
         }
-
+        //if all these validations met the requirements 
+        //set the valistatus variable true else set false
         if($fnameStatus && $lnameStatus && $emailStatus && $ageVali  && $genderVali ){
             $valiStatus=true;
         }
@@ -61,6 +63,7 @@ if (!isset($_SESSION["AdminSession"])) {
             
             require_once "../../admin/adminPanel/AcademicQuery.php";
             $queryObject = new AcademicQuery();
+            //run the update academic query 
             $queryObject->updateacademic($fn,$ln,$e,$a,$gn);
             if($queryObject){
                 echo "Update Success";

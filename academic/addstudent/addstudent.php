@@ -36,13 +36,13 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
                             <div class="row">
                                 <div class="col-lg-12 col-12  ">
                                     <div class="row gy-3 py-2">
-                                        <div class="col-6">
+                                        <div class="col-lg-3 col-md-5 col-5 ">
                                             <button onclick="showAddstudentDiv();" class="py-2 px-lg-2 px-1 fw-bold my-auto w-100">Add a student</button>
 
                                         </div>
 
 
-                               
+
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-12  py-3">
@@ -92,7 +92,7 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
                                                     <span>student_due_date</span>
                                                     <input type="date" id="duedate" class="w-100 px-2 py-2">
                                                 </div>
-                                              
+
                                                 <div class="col-6">
                                                     <span>student_gender</span>
 
@@ -148,7 +148,7 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
                                                     <span>student_due_date</span>
                                                     <input type="date" id="upstudentduedate" class="w-100 px-2 py-2">
                                                 </div>
-                                         
+
                                                 <div class="col-6">
                                                     <span>student_gender</span>
 
@@ -186,6 +186,7 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
                                                         <div class="col-12  ShowSubjectNGradeNamesDiv ">
                                                             <div class="row gy-3">
                                                                 <div class="col-6 pt-3 px-4">Send Email List</div>
+
                                                                 <div id="studentSendEmailDivInnerDiv" class="col-12 px-4 text-white">
                                                                 </div>
                                                             </div>
@@ -207,7 +208,32 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
                                     <div class="row  ">
                                         <div id="ShowSubjectNGradeNamesDiv" class="col-12  ShowSubjectNGradeNamesDiv ">
                                             <div class="row gy-3">
-                                                <div class="col-6 pt-3 px-4">students List</div>
+                                                <div class="col-6 pt-3 px-4 my-auto">students List</div>
+                                                <div class="col-4 offset-1 pt-3 px-4"> <span>select_grade</span>
+
+                                                    <select onchange="showstudents();" id="studentgradeselectTag" class="w-100 px-2 py-2">
+                                                        <option class="py-1" value="">
+                                                            Show All
+                                                        </option>
+                                                        <?php
+                                                        require_once "../../admin/adminPanel/AdminQuery.php";
+                                                        $query = new AdminQuery();
+                                                        $queryGender = $query->getGrades();
+                                                        $rowCount = $query->rowCount;
+                                                        for ($i = 0; $i < $rowCount; $i++) {
+                                                            $genderName = $queryGender[$i][1];
+                                                            $genderID = $queryGender[$i][0];
+                                                        ?>
+                                                            <option class="py-1" value="<?php echo $genderID ?>">
+                                                                <?php echo $genderName; ?>
+                                                            </option>
+                                                        <?php
+                                                        }
+                                                        ?>
+
+
+                                                    </select>
+                                                </div>
                                                 <div id="studentsList" class="col-12 px-4 text-white">
                                                 </div>
                                             </div>

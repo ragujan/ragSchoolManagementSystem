@@ -128,7 +128,7 @@ class ValidateInputs
         if (empty($str)) {
 
             $state = 0;
-        } else if (!preg_match("/^[a-zA-Z0-9 ]*$/", $str)) {
+        } else if (!preg_match("/^[a-zA-Z0-9 _]*$/", $str)) {
             $state = 0;
         } else {
             $state = 1;

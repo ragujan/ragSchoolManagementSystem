@@ -216,10 +216,32 @@ sendEmailtostudent = (id, email) => {
     form.append("id", id);
     form.append("email", email);
     fetch(url, { body: form, method: "POST" })
-    .then((response) => response.text())
-    .then((text) => {
-        console.log(text)
+        .then((response) => response.text())
+        .then((text) => {
+            console.log(text)
 
-    
-    });
+
+        });
+}
+showstudents = () => {
+    const grade = document.getElementById('studentgradeselectTag');
+
+
+    let url = "../../academic/addstudent/getstudent.php";
+    const form = new FormData();
+    form.append("grade_id", grade.value);
+
+
+
+    fetch(url, { body: form, method: "POST" })
+        .then((response) => response.text())
+        .then((text) => {
+            
+            document.getElementById('studentsList').innerHTML = text;
+            if (text.trim() == "Success") {
+                loadshowlessonnotes();
+
+            }
+
+        });
 }

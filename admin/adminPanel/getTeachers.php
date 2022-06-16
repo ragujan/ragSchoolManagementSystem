@@ -12,7 +12,7 @@ if (!isset($_SESSION["AdminSession"])) {
                 <?php
                 require_once "../../admin/adminPanel/AdminQuery.php";
                 $query = new AdminQuery();
-
+               //get the teacher table rows using the getTeachers method
                 $queryTeacher = $query->getTeachers();
                 $rowCount = $query->rowCount;
                 for ($i = 0; $i < $rowCount; $i++) {

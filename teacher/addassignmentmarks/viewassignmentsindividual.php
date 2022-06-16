@@ -64,6 +64,7 @@ require_once "../../properdatedifference/properdatedifference.php";
                 </div>
             </div>
             <?php
+           
             $getindividualstudentassignments = $query->getstudentsubmissionsbystudentid($studentid, $teachersubjectid);
             $rowcount = count($getindividualstudentassignments);
             if ($rowcount >= 1 && $getindividualstudentassignments[0] !== "Nothing") {

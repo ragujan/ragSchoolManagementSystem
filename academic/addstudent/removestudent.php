@@ -15,7 +15,7 @@ if(isset($_POST["id"]) && isset($_POST["email"])){
         require_once "../../academic/studentQuery/studentQuery.php";
         $queryObject = new StudentQuery();
   
-        $queryObject->removestudent($id,$email);
+        $queryObject->blockstudent($id,$email);
         if($queryObject){
            
         }else{

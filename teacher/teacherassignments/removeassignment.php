@@ -12,6 +12,7 @@ if (isset($_SESSION["teacher_logged_in_session"])) {
      
          $idvalidation =$validation->intIDvalid($teacherid);
          if($idvalidation && $pathstringvalidation){
+            //if it reached the validations' requirments then run the remove query for the teacher assignemnt table 
             require_once "../../teacher/teacherQuery/teacherQuery.php";
             $query = new TeacherQuery();
             $removeassignment  = $query->removeassignment($teacherid,$assignmentsrc);

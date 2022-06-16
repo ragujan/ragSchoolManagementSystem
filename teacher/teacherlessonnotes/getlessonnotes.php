@@ -12,11 +12,12 @@ if (!isset($_SESSION["teacher_logged_in_session"])) {
                 <?php
                 require_once "../../teacher/teacherQuery/teacherQuery.php";
                 $teachermail = $_SESSION["teacher_logged_in_session"];
+                //get the teacher details using the teacher logged in session variable
                 $query = new TeacherQuery();
                 $getteacherdetails = $query->getTeacherDetails($teachermail);
                 $teachersubjectid = $getteacherdetails[0][5];
                 $teacherid = $getteacherdetails[0][0];
-
+                //using the teacher id show only the teachers lessons
                 $querylesson = $query->getlessonnotes($teacherid);
                 $rowCount = $query->rowCount;
                 for ($i = 0; $i < $rowCount; $i++) {
@@ -32,7 +33,7 @@ if (!isset($_SESSION["teacher_logged_in_session"])) {
 
                     <div class="col-12  subjectDivs my-1 py-5">
                         <div class="row gy-5 ">
-                            <div class="col-lg-4 col-md-2 col-12 py-2 py-md-1     text-start ">
+                            <div class="col-lg-6 col-md-2 col-12 py-2 py-md-1     text-start ">
                                 <span class="px-5 py-3 bg-primary w-100">Lesson Title <?php echo $lessonName; ?></span>
                             </div>
                             <div class="col-lg-4 col-md-2 col-12 py-2 py-md-1   text-start ">

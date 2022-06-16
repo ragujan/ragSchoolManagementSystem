@@ -9,7 +9,7 @@ loadform = () => {
         .then((response) => response.text())
         .then((text) => {
             document.getElementById("studentuploadassignmentDiv").innerHTML = text;
-            gradechange();
+           // gradechange();
         });
 }
 const studentassignmentsubjectselector = document.getElementById("studentassignmentsubject");

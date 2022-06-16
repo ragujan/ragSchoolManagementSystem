@@ -34,7 +34,7 @@ if (!isset($_SESSION['AdminSession'])) {
                 <div class="col-12 d-none d-flex justify-content-center flex-column align-items-center showRemoveWarningDiv" id="showRemoveWarningDiv">
 
                     <div class="">
-                        <h4>Are you sure on removing this student?</h4>
+                        <h4>Are you sure on blocking this student?</h4>
                     </div>
                     <div class="py-2">
                         <span id="studentfname"></span>

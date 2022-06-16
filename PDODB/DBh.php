@@ -1,5 +1,5 @@
 <?php
-
+//database connection for the entire project
  class  DBh
 {
     private $servername;
@@ -27,6 +27,7 @@
             return $pdo;
            
         } catch (PDOException $th) {
+            //to catch the execeptions
             echo "Connection Failed"."".$th->getMessage();
         }
     }

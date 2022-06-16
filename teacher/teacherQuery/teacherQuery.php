@@ -92,7 +92,7 @@ teacher_assignment.assignment_due_date
         INNER JOIN student_assignment
         ON student.student_id = student_assignment.student_id
         INNER JOIN teacher_assignment
-        ON teacher_assignment.assignment_id =  student_assignment.assignment_id
+        ON teacher_assignment.assignmentSrc = student_assignment.assignment_id
         WHERE  student_assignment.subject_id =? AND student_assignment.student_id =?
         AND student_assignment.student_assignment_id =?";
         $statement = $this->connect()->prepare($query);
@@ -132,7 +132,7 @@ result.result_name
         INNER JOIN student_assignment
         ON student.student_id = student_assignment.student_id
         INNER JOIN teacher_assignment
-        ON teacher_assignment.assignment_id =  student_assignment.assignment_id
+        ON teacher_assignment.assignmentSrc = student_assignment.assignment_id
         INNER JOIN subject
         ON subject.subject_id = student_assignment.subject_id
         INNER JOIN result
@@ -268,7 +268,7 @@ result.result_name
             $propicrow = $this->getpropic($id);
             $earilersrc = $propicrow[0]['teacher_pro_pic_src'];
             unlink($earilersrc);
-            
+
 
             $query = "UPDATE teacher_pro_pic SET `teacher_pro_pic_src`=? 
             WHERE `teacher_id`=?";
@@ -642,7 +642,8 @@ result.result_name
         }
     }
     public function removepropic($id)
-    {   $state=false;
+    {
+        $state = false;
         if ($this->checkpropic($id)) {
             $propicrow = $this->getpropic($id);
             $earilersrc = $propicrow[0]['teacher_pro_pic_src'];
@@ -651,8 +652,8 @@ result.result_name
             WHERE teacher_pro_pic.teacher_id = ?";
             $stmt = $this->connect()->prepare($query);
             $stmtCheck = $stmt->execute([$id]);
-            if($stmtCheck){
-                $state=true;
+            if ($stmtCheck) {
+                $state = true;
             }
         }
 

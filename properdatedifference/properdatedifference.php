@@ -1,5 +1,5 @@
 <?php
-
+//propoer and solid date different class for date difference 
 class ProperDateDifference{
     public $pastdate;
     public $futuredate;

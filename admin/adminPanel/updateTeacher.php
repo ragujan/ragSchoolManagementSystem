@@ -5,6 +5,7 @@ if (!isset($_SESSION["AdminSession"])) {
 } else {
     if (isset($_POST["e"]) && isset($_POST["fn"]) && isset($_POST["ln"]) && isset($_POST["a"])  && isset($_POST["s"])  && isset($_POST["gn"])) {
        $valiStatus =false;
+       //to update the teacher row must receive them first then have to assinn the values to variables
         $e = $_POST["e"];
         $fn = $_POST["fn"];
         $ln = $_POST["ln"];
@@ -15,7 +16,7 @@ if (!isset($_SESSION["AdminSession"])) {
         require_once "../../inputValidations/ValidateInputs.php";
 
         $validation = new ValidateInputs();
-
+        //have to do validations for those received values
         $emailStatus = $validation->mailVali($e);
         $fnameStatus = $validation->stringVali($fn);
         $lnameStatus = $validation->stringVali($ln);
@@ -53,7 +54,8 @@ if (!isset($_SESSION["AdminSession"])) {
             $valiStatus=false;
            
         }
-
+        //if all these validations met the requirements 
+        //set the valistatus variable true else set false
         if($fnameStatus && $lnameStatus && $emailStatus && $ageVali && $genderVali ){
             $valiStatus=true;
         }
@@ -62,6 +64,7 @@ if (!isset($_SESSION["AdminSession"])) {
             
             require_once "../../admin/adminPanel/AdminQuery.php";
             $queryObject = new AdminQuery();
+            //run the update teacher query 
             $queryObject->updateTeacher($fn,$ln,$e,$a,$gn,$s);
             if($queryObject){
                 echo "Update Success";

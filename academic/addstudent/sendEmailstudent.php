@@ -52,8 +52,8 @@ if (!isset($_SESSION["academic_logged_in_session"])) {
                   <br>
                   <span>Username</span>
                   <input style='width:50%;outline:none;border:none;' value='$userName' readonly> ");
-                $emailSender->setHeader("Admin Verification Code Is");
-                $emailSender->setHeader("Admin Verification Code Is");
+                $emailSender->setHeader("Student Verification Code Is");
+            
                 $emailStatus = $emailSender->sendEmail();
             } else {
                 echo "process stopped";

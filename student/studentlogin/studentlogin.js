@@ -11,21 +11,23 @@ studentlogIn = () => {
         .then((text) => {
             alert(text);
             console.log(text);
-            if(text.trim() =="SuccessSuccess"){
-                window.location ="../../student/studentlogin/studentloginverifycode.php";
-            }else  if(text.trim() =="Success"){
-                window.location ="../../student/studentlogin/studentloginverifycode.php";
+            if (text.trim() == "SuccessSuccess") {
+                window.location = "../../student/studentlogin/studentloginverifycode.php";
+            } else if (text.trim() == "Success You have to pay for accessing this service") {
+                window.location = "../../paymentGateway/checkout.php";
+            } else if (text.trim() == "Success") {
+                window.location = "../../student/studentlogin/studentloginverifycode.php";
             }
-     
+
         });
 }
 dsid = (id) => {
     const htmlElement = document.getElementById(id);
     return htmlElement;
 }
-studentverifycode =()=>{
+studentverifycode = () => {
     const verifycode = dsid("verifycode");
-    
+
 
     let url = "../../student/studentLogin/studentloginverifycodeprocess.php";
     const form = new FormData();
@@ -35,9 +37,9 @@ studentverifycode =()=>{
         .then((response) => response.text())
         .then((text) => {
             console.log(text);
-            if(text.trim() =="Success"){
-                window.location ="../../student/studentLogin/deletestudentsessions.php";
+            if (text.trim() == "Success") {
+                window.location = "../../student/studentLogin/deletestudentsessions.php";
             }
-     
+
         });
 }

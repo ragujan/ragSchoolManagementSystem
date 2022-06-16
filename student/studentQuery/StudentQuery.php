@@ -181,7 +181,7 @@ class StudentQuery extends DBh
             $assignmentid = $getassignmentid[0][0];
             $searchstudentassignment = $this->getstudentassignmentdetails($assignmentid, $studentid, $subjectID, $studentgradeid);
             if (!$searchstudentassignment) {
-                $insertquery = "INSERT INTO `student_assignment` (`uploaded_date`,`subject_id`,`grade_id`,`assignment_id`,`uniquely_generated_code`,`student_results`,`student_id`,`assignmentsrc`)
+                $insertquery = "INSERT INTO `student_assignment`(`uploaded_date`,`subject_id`,`grade_id`,`assignment_id`,`uniquely_generated_code`,`student_results`,`student_id`,`assignmentsrc`)
                 VALUES (?,?,?,?,?,?,?,?)";
                 $insertStatement = $this->connect()->prepare($insertquery);
                 $insertStatementresult = $insertStatement->execute([$today, $subjectID, $studentgradeid, $assignmentid, $randomcode, $studentresults, $studentid, $folderpath]);
@@ -251,7 +251,7 @@ class StudentQuery extends DBh
     }
     public function getassignmentdetailsbycode($code)
     {
-        $query = "SELECT `assignment_id` FROM teacher_assignment
+        $query = "SELECT * FROM teacher_assignment
         WHERE teacher_assignment.assignment_unique_code = ?";
         $statement = $this->connect()->prepare($query);
         $statement->execute([$code]);
@@ -331,7 +331,7 @@ class StudentQuery extends DBh
         INNER JOIN 
         teacher_assignment
         ON 
-        teacher_assignment.assignment_id = student_assignment.assignment_id
+        teacher_assignment.assignmentSrc = student_assignment.assignment_id
         WHERE student_assignment.grade_id =  ? AND student_assignment.student_id =?";
         $assignmentstmt =  $this->connect()->prepare($query);
         $assignmentstmt->execute([$gradeid, $studentid]);
@@ -438,6 +438,7 @@ class StudentQuery extends DBh
         }
         return $state;
     }
+
     public function removestudent($id, $email)
     {
 
@@ -530,6 +531,55 @@ class StudentQuery extends DBh
             $query = "UPDATE `student` SET `student_fname`=?,`student_lname`=?,`student_age`=?,`student_gender`=? WHERE `student_email`=? ";
             $statement = $this->connect()->prepare($query);
             $insertStatement = $statement->execute([$fname, $lname, $age, $gender, $email]);
+            if ($insertStatement) {
+
+                $state = true;
+            } else {
+
+                $state = false;
+            }
+        } else {
+            $state = false;
+        }
+
+        return $state;
+    }
+    public function updatestudentstatus($email)
+    {
+        $state = false;
+        $emailCheck =  $this->checkstudentEmail($email);
+        if (!$emailCheck) {
+
+            $state = false;
+
+            $query = "UPDATE `student` SET `student_status`='1' WHERE `student_email`=? ";
+            $statement = $this->connect()->prepare($query);
+            $insertStatement = $statement->execute([$email]);
+            if ($insertStatement) {
+
+                $state = true;
+            } else {
+
+                $state = false;
+            }
+        } else {
+            $state = false;
+        }
+
+        return $state;
+    }
+    public function updateStudentDueDate($email, $today)
+    {
+
+        $state = false;
+        $emailCheck =  $this->checkstudentEmail($email);
+        if (!$emailCheck) {
+
+            $state = false;
+
+            $query = "UPDATE `student` SET `student_due_date`=? WHERE `student_email`=? ";
+            $statement = $this->connect()->prepare($query);
+            $insertStatement = $statement->execute([$today, $email]);
             if ($insertStatement) {
 
                 $state = true;
@@ -704,7 +754,7 @@ class StudentQuery extends DBh
         INNER JOIN student_assignment
         ON student_assignment.student_assignment_id = approved_results.student_assignment_id
         INNER JOIN teacher_assignment
-        ON teacher_assignment.assignment_id = student_assignment.assignment_id
+        ON teacher_assignment.assignmentSrc = student_assignment.assignment_id
         INNER JOIN subject
         ON subject.subject_id = student_assignment.subject_id
         INNER JOIN result
@@ -759,7 +809,8 @@ class StudentQuery extends DBh
         }
     }
     public function removepropic($id)
-    {   $state=false;
+    {
+        $state = false;
         if ($this->checkpropic($id)) {
             $propicrow = $this->getpropic($id);
             $earilersrc = $propicrow[0]['student_pro_pic_src'];
@@ -768,8 +819,8 @@ class StudentQuery extends DBh
             WHERE student_pro_pic.student_id = ?";
             $stmt = $this->connect()->prepare($query);
             $stmtCheck = $stmt->execute([$id]);
-            if($stmtCheck){
-                $state=true;
+            if ($stmtCheck) {
+                $state = true;
             }
         }
 

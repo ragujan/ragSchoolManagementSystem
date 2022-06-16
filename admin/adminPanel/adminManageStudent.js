@@ -268,3 +268,28 @@ sendEmailtostudent = (id, email) => {
             console.log(text);
         });
 }
+
+viewIndividualstudentResults = (id)=>{
+    
+    window.location = "../../admin/adminPanel/viewassignmentsindividual.php?X=" + id;
+}
+changeGrade = (id)=>{
+    window.location = "../../admin/adminPanel/chagestudentgrade.php?studentid=" + id;
+}
+changestudentGradeProcess =(id)=>{
+    let url = "../../admin/adminPanel/changestudentGradeProcess.php";
+    const grade = document.querySelector("#changegradestudent");
+    const form = new FormData();
+    form.append("id", id);
+    form.append("grade",grade.value)
+    
+    fetch(url, { body: form, method: "POST" })
+        .then((response) => response.text())
+        .then((text) => {
+
+            console.log(text);
+            if(text == "SuccessFully Changed Grade"){
+                window.location.reload(true)
+            }
+        });
+}

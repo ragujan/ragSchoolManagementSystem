@@ -5,6 +5,7 @@ if (isset($_SESSION["teacher_logged_in_session"])) {
     require_once "../../teacher/teacherQuery/teacherQuery.php";
     $teachermail = $_SESSION["teacher_logged_in_session"];
     $query = new TeacherQuery();
+    //get teacher details from the teacher table
     $getteacherdetails = $query->getTeacherDetails($teachermail);
     $teachersubjectid = $getteacherdetails[0][5];
     $teacherid = $getteacherdetails[0][0];
@@ -15,12 +16,14 @@ if (isset($_SESSION["teacher_logged_in_session"])) {
         if (isset($_POST["grade_id"])) {
             $gradeid = $_POST["grade_id"];
             require_once "../../inputValidations/ValidateInputs.php";
+            //do validations for the input that has been received from the client side
             $validation = new ValidateInputs();
             $gradevali = $validation->gradeVali($gradeid);
             if ($gradevali) {
+                //if the grade validation is success now here we write a query to get the submitted students
                 $getsubmittedstudents = $query->getsubmittedstudentbygrade($gradeid, $teachersubjectid);
                 $sumittedstudentrowcount = count($getsubmittedstudents);
-
+                //this following mechanism is for differenciate the submitted students from the unsubmitted students
                 $submittedstudentArray = [];
                 $submittedstudentsrc = [];
 

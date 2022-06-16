@@ -180,10 +180,10 @@ class AcademicQuery extends DBh
         $academicCheckStmt = $this->connect()->prepare($academicCheckQuery);
         $academicCheckStmt->execute([$e]);
         if ($academicCheckStmt->rowCount() == 1) {
-           
+
             $state = false;
         } else {
-            
+
             $state = true;
         }
         return $state;
@@ -224,7 +224,35 @@ class AcademicQuery extends DBh
         }
         return $state;
     }
+    public function blockacademic($id, $email)
+    {
 
+        $state = false;
+
+        $emailCheck =  $this->checkacademicEmail($email);
+        if (!$emailCheck) {
+            $academicStatus = 0;
+            $academicDetails = $this->getSingleacademic($id, $email);
+            if ($academicDetails[0]["academic_status"] == 1) {
+                $academicStatus = 0;
+            } else {
+                $academicStatus = 1;
+            }
+            $academicQuery = "UPDATE `academic` SET `academic_status`='" . $academicStatus . "' WHERE `academic_id`=? AND `academic_email`=?";
+            $academicStatement = $this->connect()->prepare($academicQuery);
+            $academicDeleteStatus = $academicStatement->execute([$id, $email]);
+            if ($academicDeleteStatus) {
+                echo "Success";
+                $state = true;
+            } else {
+                echo "Failed";
+                $state = false;
+            }
+        } else {
+            echo "No Email Found in the DB";
+        }
+        return $state;
+    }
     public function getSingleacademic($id, $email)
     {
         $emailCheck =  $this->checkacademicEmail($email);
@@ -235,7 +263,6 @@ class AcademicQuery extends DBh
             $academicRowsFound = $academicStatement->rowCount();
             if ($academicRowsFound == 1) {
                 $resultsArray = $academicStatement->fetchAll();
-               
             } else {
                 echo "Failed";
             }
@@ -257,10 +284,10 @@ class AcademicQuery extends DBh
             $insertStatement = $statement->execute([$fname, $lname, $age, $gender, $email]);
             echo $email;
             if ($insertStatement) {
-               
+
                 $state = true;
             } else {
-            
+
                 $state = false;
             }
         } else {
@@ -269,42 +296,43 @@ class AcademicQuery extends DBh
 
         return $state;
     }
-    public function academicCheckEnM($email,$id){
+    public function academicCheckEnM($email, $id)
+    {
         $state = false;
         $academicCheckQuery = "SELECT * FROM `academic` WHERE `academic_email`=? AND `academic_Id`=?";
         $academicCheckStmt = $this->connect()->prepare($academicCheckQuery);
-        $academicCheckStmt->execute([$email,$id]);
+        $academicCheckStmt->execute([$email, $id]);
         if ($academicCheckStmt->rowCount() == 1) {
-            
+
             $state = false;
-           
         } else {
             $state = true;
         }
         return $state;
     }
-    public function setacademicPassword($email,$id,$p){
+    public function setacademicPassword($email, $id, $p)
+    {
         $hashPassword = password_hash($p, PASSWORD_DEFAULT);
-        $academicCheck= $this->academicCheckEnM($email,$id);
-         
-            $academicCheckQuery = "UPDATE `academic` SET `academic_password`=? WHERE `academic_id`=? AND `academic_email`=? ";
-            $academicCheckStmt = $this->connect()->prepare($academicCheckQuery);
-            $academicCheckStmt->execute([$hashPassword,$id,$email]);
-            if($academicCheckStmt){
-                echo "Yess changed";
-            }else{
-                echo "nope";
-            }
-        
+        $academicCheck = $this->academicCheckEnM($email, $id);
+
+        $academicCheckQuery = "UPDATE `academic` SET `academic_password`=? WHERE `academic_id`=? AND `academic_email`=? ";
+        $academicCheckStmt = $this->connect()->prepare($academicCheckQuery);
+        $academicCheckStmt->execute([$hashPassword, $id, $email]);
+        if ($academicCheckStmt) {
+            echo "Yess changed";
+        } else {
+            echo "nope";
+        }
     }
-    public function getacademicDetails($email){
+    public function getacademicDetails($email)
+    {
         $state = false;
         $academicCheckQuery = "SELECT * FROM `academic` WHERE `academic_email`=?";
         $academicCheckStmt = $this->connect()->prepare($academicCheckQuery);
         $academicCheckStmt->execute([$email]);
-        $rowFounds = $academicCheckStmt ->rowCount();
+        $rowFounds = $academicCheckStmt->rowCount();
         if ($rowFounds >= 1) {
-            $fetchRows = $academicCheckStmt ->fetchAll();
+            $fetchRows = $academicCheckStmt->fetchAll();
             $this->rowCount = $rowFounds;
         } else {
             $fetchRows = array("Nothing");
@@ -313,32 +341,33 @@ class AcademicQuery extends DBh
 
         return $fetchRows;
     }
-    public function addVerificationCode($id,$code){
+    public function addVerificationCode($id, $code)
+    {
         $userCheck = $this->checkVerificationCode($id);
-        if($userCheck){
-            $tablename ="verification_code_academic";
-            $query ="UPDATE `".$tablename."` SET `verify_code`=? WHERE `id`=?";
+        if ($userCheck) {
+            $tablename = "verification_code_academic";
+            $query = "UPDATE `" . $tablename . "` SET `verify_code`=? WHERE `id`=?";
             $queryStatement = $this->connect()->prepare($query);
-            $queryStatement->execute([$code,$id]);
-        }else{
-            $tablename ="verification_code_academic";
-            $query ="INSERT INTO `".$tablename."` (`verify_code`,`id`) VALUES(?,?)";
+            $queryStatement->execute([$code, $id]);
+        } else {
+            $tablename = "verification_code_academic";
+            $query = "INSERT INTO `" . $tablename . "` (`verify_code`,`id`) VALUES(?,?)";
             $queryStatement = $this->connect()->prepare($query);
-            $queryStatement->execute([$code,$id]);
+            $queryStatement->execute([$code, $id]);
         }
-    
     }
-    public function checkVerificationCode($id){
+    public function checkVerificationCode($id)
+    {
         $state = false;
-        $tablename ="verification_code_academic";
+        $tablename = "verification_code_academic";
         $CheckQuery = "SELECT * FROM `$tablename` WHERE `id`=?";
         $CheckStmt = $this->connect()->prepare($CheckQuery);
         $CheckStmt->execute([$id]);
-        $rowFounds = $CheckStmt ->rowCount();
+        $rowFounds = $CheckStmt->rowCount();
         if ($rowFounds == 1) {
-               $state =true;
+            $state = true;
         } else {
-             $state =false;
+            $state = false;
         }
 
         return $state;

@@ -3,9 +3,8 @@ session_start();
 if (!isset($_SESSION["student_logged_in_session"])) {
     die();
 } else {
-
-
     if (isset($_POST["subjectid"])) {
+        //to get the subjects
         $email = $_SESSION["student_logged_in_session"];
         $subjectID = $_POST["subjectid"];
         require_once "../../student/studentQuery/studentQuery.php";
@@ -15,8 +14,7 @@ if (!isset($_SESSION["student_logged_in_session"])) {
         $gradeID = $querygrade[0][0];
 ?>
         <select id="studentassignmentassignment" class="w-100 px-2 py-2">
-            <?php
-            
+            <?php          
             $queryassignment = $query->getstudentassignmentwithsubjectid($gradeID, $subjectID);
             $rowCount = $query->rowCount;
             for ($i = 0; $i < $rowCount; $i++) {

@@ -13,7 +13,7 @@ if (isset($_SESSION["teacher_logged_in_session"])) {
     $teacherid = $getteacherdetails[0][0];
 
     if(isset($_POST["sid"]) && isset($_POST["marks"]) && isset($_POST["aid"])){
-     
+       //validating input fields
         $validation = new ValidateInputs();
         $sid =$_POST["sid"] ;
         $marks = $_POST["marks"];
@@ -21,9 +21,13 @@ if (isset($_SESSION["teacher_logged_in_session"])) {
         $valisid = $validation->intIDvalid($sid);
         $valiassignmentid = $validation->intIDvalid($assignmentid);
         $valimarks = $validation->marksVali($marks);
+        //if it all reached the validation requirements it will come to this section
         if($valimarks && $valisid && $valiassignmentid ){
+            //this will return the students assignment details of that specific teachers subjects only
             $studentassignmentdetails = $query->getstudentsubmissionsbystudentidNteacherid($sid, $teachersubjectid,$assignmentid);
+            //if rows found it will go to this block
             if($studentassignmentdetails[0] !=="Nothing" && count($studentassignmentdetails) >=1 ){
+                //get the required details that are needed to for the insert query for the student assignemnt marks
                 $student_assignment_result = $studentassignmentdetails[0]['student_results'];
                 $due_date =  $studentassignmentdetails[0]['assignment_due_date'];
                 $uploaded_date = $studentassignmentdetails[0]['uploaded_date'];
@@ -34,7 +38,9 @@ if (isset($_SESSION["teacher_logged_in_session"])) {
                 if($student_assignment_result=='1'){
                     
                     $calculateResultprocess = new CalculateResults();
+                    //this will calculate and omit the result with the due date if it passed the due date marks will be reduced
                     $calculated_result = $calculateResultprocess->giveresults($marks,$date_sign);
+                    //updating the student marks because the default values is pending with the key value 1
                     $resultaddstatus =$query->addresultsforstudent($calculated_result,$assignmentid,$teachersubjectid,$sid);
                     if($resultaddstatus){
                         echo "Success";

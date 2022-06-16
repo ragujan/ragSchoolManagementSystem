@@ -1,6 +1,7 @@
 <?php
 
-
+//created this fild handler so it way too easier than implementing each time just have
+//set the approved file type file size file name and the folder name that you want to save the files
 class FileHandler
 {   private $status =false;
     public $thecommonfile;
@@ -40,7 +41,7 @@ class FileHandler
         return $this->status;
     }
     public function getFilename()
-    {
+    {   //this will return the created file name uniquely generated file name
         return $this->unique_name_generated;
     }
 

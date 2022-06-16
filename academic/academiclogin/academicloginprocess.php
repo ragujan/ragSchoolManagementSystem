@@ -38,7 +38,7 @@ if (isset($_POST["email"])  && isset($_POST["password"])) {
 
       $emailSender->setBody("<h2 style='font-family: Impact, sans-serif;
       color: #CE5937;'>
-        Your User_name and Verification Code 
+        Your Academic User_name and Verification Code 
         </h2>
         <span>Verification Code</span>
         <input style='width:50%;outline:none;border:none;' value='$code' readonly>
@@ -46,7 +46,7 @@ if (isset($_POST["email"])  && isset($_POST["password"])) {
         <br>
         <span>Username</span>
         <input style='width:50%;outline:none;border:none;' value='$academicUserName' readonly> ");
-      $emailSender->setHeader("Admin Verification Code Is");
+      $emailSender->setHeader("Academic Verification");
       $emailStatus = $emailSender->sendEmail();
      //add verfication code to the academic table in the database
       $query->addVerificationCode($academicID, $code);

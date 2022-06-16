@@ -13,16 +13,19 @@ if (!isset($_SESSION["student_logged_in_session"])) {
                 require_once "../../student/studentQuery/studentQuery.php";
                 $studentmail = $_SESSION["student_logged_in_session"];
                 $query = new StudentQuery();
+                //get the student details from the student table using the logged in session email 
                 $getstudentdetails = $query->getstudentDetails($studentmail);
                 $studentsubjectid = $getstudentdetails[0][5];
                 $studentid = $getstudentdetails[0][0];
                 $studentgrade =  $getstudentdetails[0][8];
-
+                //to get the student assignemnt details using the student grade and student id
                 $queryassignment = $query->getassignments($studentgrade,$studentid);
+
+                //this following process is for differenciate the uploaded ones from the not uploaded ones
                 $rowCount = $query->rowCount;
                 $assignmentIDArrays_from_student = [];
                 for ($i = 0; $i < $rowCount; $i++) {
-                    $assignmentID =  $queryassignment[$i]['assignment_id'];
+                    $assignmentID =  $queryassignment[$i]['assignment_unique_code'];
                     $assignmentSrc =  $queryassignment[$i]['assignmentSrc'];
 
                     $assignmentName = $queryassignment[$i]['assignment_name'];
@@ -39,7 +42,7 @@ if (!isset($_SESSION["student_logged_in_session"])) {
                 $rowCount = $query->rowCount;
                 $assignmentIDArrays_from_teacher = [];
                 for ($i = 0; $i < $rowCount; $i++) {
-                    $assignmentID =  $queryassignment[$i]['assignment_id'];
+                    $assignmentID =  $queryassignment[$i]['assignment_unique_code'];
                     $assignmentSrc =  $queryassignment[$i]['assignmentSrc'];
                     $assignmentName = $queryassignment[$i]['assignment_name'];
                     $assignmentSubjectName = $queryassignment[$i]['subject_name'];

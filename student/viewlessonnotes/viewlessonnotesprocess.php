@@ -13,10 +13,12 @@ if (!isset($_SESSION["student_logged_in_session"])) {
                 require_once "../../student/studentQuery/studentQuery.php";
                 $studentmail = $_SESSION["student_logged_in_session"];
                 $query = new StudentQuery();
+               //get the student details from the student table using the logged in session email 
                 $getstudentdetails = $query->getstudentDetails($studentmail);
                 $studentsubjectid = $getstudentdetails[0][5];
                 $studentid = $getstudentdetails[0][0];
                  $studentgrade =  $getstudentdetails[0][8];
+                 //get the lesson notes according to the student grade
                 $querylesson = $query->getlessonnotes( $studentgrade );
                 $rowCount = $query->rowCount;
                
@@ -32,7 +34,7 @@ if (!isset($_SESSION["student_logged_in_session"])) {
 
                     <div class="col-12  subjectDivs my-1 py-5">
                         <div class="row gy-5 ">
-                            <div class="col-lg-4  col-md-2 col-12 py-2 py-md-1     text-start ">
+                            <div class="col-lg-12  col-md-2 col-12 py-2 py-md-1     text-start ">
                                 <span class="ragFancyButton px-5  py-3  w-100">Lesson Title <?php echo $lessonName; ?></span>
                             </div>
                             <div class="col-lg-4 col-md-2 col-12 py-2 py-md-1   text-start ">

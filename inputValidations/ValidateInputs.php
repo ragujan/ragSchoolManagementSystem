@@ -1,5 +1,6 @@
 <?php
-
+//validation class for validating input fields such as
+///names fields , number fields,password fields,get date differences
 class ValidateInputs
 {
     private $email;
@@ -201,7 +202,7 @@ class ValidateInputs
         if (empty($str)) {
 
             $state = 0;
-        } else if (!preg_match("/^[a-zA-Z0-9 ]*$/", $str)) {
+        } else if (!preg_match("/^[a-zA-Z0-9 _]+$/", $str)) {
             $state = 0;
         } else {
             $state = 1;

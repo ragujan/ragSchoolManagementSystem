@@ -1,4 +1,4 @@
-//most of these functions are to send data to the respective server sides 
+//most of these functions are for send data to the respective server sides 
 //using fetch api instead of ajax
 function manageTeachersPage() {
     window.location = "../../admin/adminPanel/adminManageTeachers.php";
